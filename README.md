@@ -7,3 +7,6 @@ How to run this project on your machine:\
 
 To start server:\
 `node server.js`
+
+
+`git pull` before you start working on the project
