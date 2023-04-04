@@ -24,7 +24,7 @@ const typeWriter = (text, className, i = 0) => {
     });
 };
 
-const runTypewriters = async (roomName, description, actions) => {
+const displayCurrentRoom = async (roomName, description, actions) => {
     await typeWriter(roomName, "current-room");
     await typeWriter(description, "description");
     for (let i = 0; i < actions.length; i++) {
@@ -48,7 +48,11 @@ window.addEventListener("load", () => {
             actions = currentRoom.actions;
 
             // Write text to browser
-            runTypewriters(currentRoom.name, currentRoom.description, actions);
+            displayCurrentRoom(
+                currentRoom.name,
+                currentRoom.description,
+                actions
+            );
         })
         .catch((error) => {
             console.error(error);
@@ -65,13 +69,9 @@ document.querySelector("form").addEventListener("submit", (event) => {
     const action = actions[inputValue - 1];
 
     // Clear old text
-    let elCurRoom = document.querySelector(`.current-room`);
-    let elDescription = document.querySelector(`.description`);
-    let elActions = document.querySelector(`.actions`);
-
-    elCurRoom.innerHTML = "";
-    elDescription.innerHTML = "";
-    elActions.innerHTML = "";
+    document.querySelector(".current-room").innerHTML = "";
+    document.querySelector(".description").innerHTML = "";
+    document.querySelector(".actions").innerHTML = "";
 
     // Call the API with the input value
     axios
@@ -82,7 +82,11 @@ document.querySelector("form").addEventListener("submit", (event) => {
             actions = currentRoom.actions;
 
             // Write new text to browser
-            runTypewriters(currentRoom.name, currentRoom.description, actions);
+            displayCurrentRoom(
+                currentRoom.name,
+                currentRoom.description,
+                actions
+            );
         })
         .catch((error) => {
             // Handle any errors that occur during the API request

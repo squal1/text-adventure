@@ -5,7 +5,7 @@
 
     "rooms": {
         "entrance": {
-            "name": "entrance",
+            "name": "Entrance",
             "description": "This is an entrance",
             "actions": [
                 {
@@ -16,12 +16,12 @@
             ]
         },
         "room1": {
-            "name": "room1",
-            "description": "You arrived room 1",
+            "name": "Room1",
+            "description": "You arrived room 1. You saw a wooden stick on the ground.",
             "actions": [
                 {
                     "type": "collect",
-                    "description": "There is a stick that you can pick up.",
+                    "description": "Pick up the stick.",
                     "item": "stick"
                 },
                 {
@@ -37,7 +37,7 @@
             ]
         },
         "room2": {
-            "name": "room2",
+            "name": "Room2",
             "description": "You arrived room 2",
             "actions": [
                 {
@@ -53,7 +53,7 @@
             ]
         },
         "exit": {
-            "name": "exit",
+            "name": "Exit",
             "description": "You made it to the exit",
             "actions": []
         }
