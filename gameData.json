@@ -1,0 +1,61 @@
+{
+    "player": {
+        "items": []
+    },
+
+    "rooms": {
+        "entrance": {
+            "name": "entrance",
+            "description": "This is an entrance",
+            "actions": [
+                {
+                    "type": "move",
+                    "description": "Proceed to room 1",
+                    "destination": "room1"
+                }
+            ]
+        },
+        "room1": {
+            "name": "room1",
+            "description": "You arrived room 1",
+            "actions": [
+                {
+                    "type": "collect",
+                    "description": "There is a stick",
+                    "item": "stick"
+                },
+                {
+                    "type": "move",
+                    "description": "Go back to entrance",
+                    "destination": "entrance"
+                },
+                {
+                    "type": "move",
+                    "description": "Proceed to room 2",
+                    "destination": "room2"
+                }
+            ]
+        },
+        "room2": {
+            "name": "room2",
+            "description": "You arrived room 2",
+            "actions": [
+                {
+                    "type": "move",
+                    "description": "Go back to room 1",
+                    "destination": "room1"
+                },
+                {
+                    "type": "move",
+                    "description": "Proceed to the exit",
+                    "destination": "exit"
+                }
+            ]
+        },
+        "exit": {
+            "name": "exit",
+            "description": "You made it to the exit",
+            "actions": []
+        }
+    }
+}

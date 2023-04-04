@@ -2,11 +2,28 @@
 <html>
     <head>
         <title>Text adventure</title>
+        <link rel="shortcut icon" href="#" />
         <link rel="stylesheet" type="text/css" href="style.css" />
     </head>
     <body>
-        <header></header>
-        <main>hello world</main>
+        <header>
+            <h1>Text adventure</h1>
+        </header>
+        <main>
+            <p>Current Room:</p>
+            <p class="current-room"></p>
+            <p>Description:</p>
+            <p class="description"></p>
+            <p>Actions</p>
+            <div class="actions"></div>
+            <form>
+                <label for="inputField">Input:</label>
+                <input type="text" id="inputField" name="inputField" />
+                <button type="submit">Submit</button>
+            </form>
+        </main>
         <footer></footer>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script src="script.js"></script>
     </body>
 </html>
