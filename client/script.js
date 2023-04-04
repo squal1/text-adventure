@@ -14,14 +14,27 @@ const typeWriter = (text, className, i = 0) => {
         if (i < text.length) {
             element.innerHTML += text.charAt(i);
             i++;
-            // Speed = 35ms per word
+            // Speed = 20ms per word
             setTimeout(() => {
                 typeWriter(text, className, i).then(resolve);
-            }, 35);
+            }, 20);
         } else {
             resolve();
         }
     });
+};
+
+const runTypewriters = async (roomName, description, actions) => {
+    await typeWriter(roomName, "current-room");
+    await typeWriter(description, "description");
+    for (let i = 0; i < actions.length; i++) {
+        const action = actions[i];
+        let div = document.createElement("div");
+        div.classList.add(`action${i}`);
+        parent = document.querySelector(`.actions`);
+        parent.append(div);
+        await typeWriter(`${i + 1}. ${action.description}`, `action${i}`);
+    }
 };
 
 // Fetch all the game data when the website is initialized
@@ -34,20 +47,8 @@ window.addEventListener("load", () => {
             currentRoom = response.data.currentRoom;
             actions = currentRoom.actions;
 
-            typeWriter(currentRoom.name, "current-room").then(() => {
-                typeWriter(currentRoom.description, "description").then(() => {
-                    actions.forEach((action, index) => {
-                        let div = document.createElement("div");
-                        div.classList.add(`action${index}`);
-                        parent = document.querySelector(`.actions`);
-                        parent.append(div);
-                        typeWriter(
-                            `${index + 1}. ${action.description}`,
-                            `action${index}`
-                        );
-                    });
-                });
-            });
+            // Write text to browser
+            runTypewriters(currentRoom.name, currentRoom.description, actions);
         })
         .catch((error) => {
             console.error(error);
@@ -62,36 +63,26 @@ document.querySelector("form").addEventListener("submit", (event) => {
     const inputField = document.querySelector("#inputField");
     const inputValue = inputField.value;
     const action = actions[inputValue - 1];
+
+    // Clear old text
     let elCurRoom = document.querySelector(`.current-room`);
     let elDescription = document.querySelector(`.description`);
     let elActions = document.querySelector(`.actions`);
+
+    elCurRoom.innerHTML = "";
+    elDescription.innerHTML = "";
+    elActions.innerHTML = "";
 
     // Call the API with the input value
     axios
         .post("/action", { action: action })
         .then((response) => {
-            elCurRoom.innerHTML = "";
-            elDescription.innerHTML = "";
-            elActions.innerHTML = "";
-
             // Server sending back a room object representing the new room
             currentRoom = response.data;
             actions = currentRoom.actions;
 
-            typeWriter(currentRoom.name, "current-room").then(() => {
-                typeWriter(currentRoom.description, "description").then(() => {
-                    actions.forEach((action, index) => {
-                        let div = document.createElement("div");
-                        div.classList.add(`action${index}`);
-                        parent = document.querySelector(`.actions`);
-                        parent.append(div);
-                        typeWriter(
-                            `${index + 1}. ${action.description}`,
-                            `action${index}`
-                        );
-                    });
-                });
-            });
+            // Write new text to browser
+            runTypewriters(currentRoom.name, currentRoom.description, actions);
         })
         .catch((error) => {
             // Handle any errors that occur during the API request

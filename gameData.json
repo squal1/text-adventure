@@ -21,7 +21,7 @@
             "actions": [
                 {
                     "type": "collect",
-                    "description": "There is a stick",
+                    "description": "There is a stick that you can pick up.",
                     "item": "stick"
                 },
                 {
