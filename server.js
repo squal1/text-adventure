@@ -21,10 +21,15 @@ app.post("/action", (req, res) => {
     // Handle the action object
     switch (action.type) {
         case "move":
+            // Move to the destination
             res.status(200).send(rooms[action.destination]);
             break;
         case "collect":
-            // Handle update action
+            // Handle update action -> Send back the item
+            res.status(200).send(action.item);
+            break;
+        case "fight":
+            // TODO: Handle fight action
             break;
         default:
             // Handle invalid action
