@@ -9,21 +9,21 @@ axios.defaults.baseURL = "http://localhost:8000";
 const typeWriter = (text, className, i = 0) => {
     return new Promise((resolve, reject) => {
         const element = document.querySelector(`.${className}`);
-        // if (!element) {
-        //     console.log(text, className);
-        //     reject(
-        //         new Error(`Element with class name '${className}' not found.`)
-        //     );
-        //     return;
-        // }
+        if (!element) {
+            console.log(text, className);
+            reject(
+                new Error(`Element with class name '${className}' not found.`)
+            );
+            return;
+        }
 
-        // Type out the text character by character using a recursive setTimeout function with 18ms delay per character.
+        // Type out the text character by character using a recursive setTimeout function with 16ms delay per character.
         if (i < text.length) {
             element.innerHTML += text.charAt(i);
             i++;
             setTimeout(() => {
                 typeWriter(text, className, i).then(resolve).catch(reject);
-            }, 18);
+            }, 16);
         } else {
             // Resolve the Promise when the typing animation is complete.
             resolve();
@@ -56,6 +56,23 @@ const displayCurrentRoom = async (roomName, description, actions) => {
         i++;
     }
     inputField.disabled = false;
+};
+
+// Update item list on display
+const updateItems = async (newItem) => {
+    let div = document.createElement("p");
+
+    const parent = document.querySelector(`.items`);
+
+    const childElements = Array.from(parent.children);
+    const numChildElements = childElements.length;
+
+    div.classList.add(`item${numChildElements + 1}`);
+    parent.append(div);
+    await typeWriter(
+        `${numChildElements + 1}. ${newItem}`,
+        `item${numChildElements + 1}`
+    );
 };
 
 // Fetch all the game data when the website is initialized
@@ -124,7 +141,9 @@ document.querySelector("form").addEventListener("submit", (event) => {
                     newItem = response.data;
                     // Add item into player items
                     player.items[newItem] = true;
+                    // console.log(player.items);
 
+                    updateItems(newItem);
                     displayCurrentRoom(
                         currentRoom.name,
                         currentRoom.description,

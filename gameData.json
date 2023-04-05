@@ -38,8 +38,13 @@
         },
         "room2": {
             "name": "Room2",
-            "description": "You arrived room 2",
+            "description": "You arrived room 2. There is a treasure box.",
             "actions": [
+                {
+                    "type": "collect",
+                    "description": "Loot the treasure.",
+                    "item": "treasure"
+                },
                 {
                     "type": "move",
                     "description": "Go back to room 1",
