@@ -1,5 +1,6 @@
 {
     "player": {
+        "stats": { "hp": 10, "attack": 1 },
         "items": {}
     },
 
@@ -51,9 +52,18 @@
                     "destination": "room1"
                 },
                 {
+                    "type": "fight",
+                    "description": "Fight with the slime which is blocking your way.",
+                    "enemy": "slime",
+                    "attack": 2,
+                    "hp": 2,
+                    "location": "Room2"
+                },
+                {
                     "type": "move",
                     "description": "Proceed to the exit",
-                    "destination": "exit"
+                    "destination": "exit",
+                    "showIfCleared": true
                 }
             ]
         },
@@ -62,5 +72,10 @@
             "description": "You made it to the exit",
             "actions": []
         }
+    },
+
+    "world": {
+        "solvedPuzzleRooms": {},
+        "clearedRooms": {}
     }
 }

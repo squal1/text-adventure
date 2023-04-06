@@ -1,5 +1,5 @@
 const express = require("express");
-const { player, rooms, currentRoom } = require("./gameDataManager");
+var { player, rooms, world, currentRoom } = require("./gameDataManager");
 
 const app = express();
 const port = 8000;
@@ -12,7 +12,7 @@ app.get("/init", (req, res) => {
         res.status(500).send("Game data not found");
         return;
     }
-    res.status(200).send({ player, rooms, currentRoom });
+    res.status(200).send({ player, rooms, world, currentRoom });
 });
 
 app.post("/action", (req, res) => {
@@ -22,14 +22,37 @@ app.post("/action", (req, res) => {
     switch (action.type) {
         case "move":
             // Move to the destination
-            res.status(200).send(rooms[action.destination]);
+            currentRoom = rooms[action.destination];
+            res.status(200).send(currentRoom);
             break;
         case "collect":
-            // Handle update action -> Send back the item
-            res.status(200).send(action.item);
+            // Handle update action -> Send back the player data and item data
+            newItem = action.item;
+            player.items[newItem] = true;
+            newPlayerData = player;
+            // console.log(newPlayerData);
+            res.status(200).send({ newPlayerData, newItem });
             break;
         case "fight":
-            // TODO: Handle fight action
+            enemyHp = action.hp;
+            enemyAtk = action.attack;
+            playerHp = player.stats.hp;
+            playerAtk = player.stats.attack;
+
+            numOfRounds = Math.floor(enemyHp / playerAtk);
+            playerHp -= enemyAtk * numOfRounds;
+
+            // Update player hp
+            player.stats.hp = playerHp;
+            // Update world
+            world.clearedRooms[action.location] = true;
+
+            newPlayerData = player;
+            newWorldData = world;
+
+            res.status(200).send({ newPlayerData, newWorldData, currentRoom });
+
+            // Handle fight action
             break;
         default:
             // Handle invalid action

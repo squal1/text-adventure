@@ -1,6 +1,7 @@
 var rooms;
 var currentRoom;
 var player;
+var world;
 var actions;
 
 axios.defaults.baseURL = "http://localhost:8000";
@@ -23,7 +24,7 @@ const typeWriter = (text, className, i = 0) => {
             i++;
             setTimeout(() => {
                 typeWriter(text, className, i).then(resolve).catch(reject);
-            }, 16);
+            }, 1);
         } else {
             // Resolve the Promise when the typing animation is complete.
             resolve();
@@ -39,15 +40,31 @@ const displayCurrentRoom = async (roomName, description, actions) => {
 
     await typeWriter(roomName, "current-room");
     await typeWriter(description, "description");
+
     // Loop through each action in array and display it using the typeWriter function
     let i = 0;
     while (i < actions.length) {
         const action = actions[i];
+        console.log(action);
         // Check if the action is a "collect" action and if the item has already been collected, remove it from the array.
         if (action.type == "collect" && action.item in player.items) {
             actions.splice(i, 1);
             continue;
         }
+        // Check if the action is a "fight" action and if the room has already been cleared, remove it from the array.
+        if (action.type == "fight" && currentRoom.name in world.clearedRooms) {
+            actions.splice(i, 1);
+            continue;
+        }
+        // Check if the action has showIfCleared attribute, hide if room is not in world.clearedRooms
+        if (
+            action.hasOwnProperty("showIfCleared") &&
+            !(currentRoom.name in world.clearedRooms)
+        ) {
+            actions.splice(i, 1);
+            continue;
+        }
+        // Write action into action list
         let div = document.createElement("div");
         div.classList.add(`action${i}`);
         parent = document.querySelector(`.actions`);
@@ -82,6 +99,7 @@ window.addEventListener("load", () => {
         .then((response) => {
             player = response.data.player;
             rooms = response.data.rooms;
+            world = response.data.world;
             currentRoom = response.data.currentRoom;
             actions = currentRoom.actions;
 
@@ -125,7 +143,7 @@ document.querySelector("form").addEventListener("submit", (event) => {
         .post("/action", { action: action })
         .then((response) => {
             switch (action.type) {
-                case "move":
+                case "move": {
                     // Server sending back a room object representing the new room
                     currentRoom = response.data;
                     actions = currentRoom.actions;
@@ -137,11 +155,11 @@ document.querySelector("form").addEventListener("submit", (event) => {
                         actions
                     );
                     break;
-                case "collect":
-                    newItem = response.data;
-                    // Add item into player items
-                    player.items[newItem] = true;
-                    // console.log(player.items);
+                }
+                case "collect": {
+                    let { newPlayerData, newItem } = response.data;
+                    // Update player data
+                    player = newPlayerData;
 
                     updateItems(newItem);
                     displayCurrentRoom(
@@ -150,6 +168,24 @@ document.querySelector("form").addEventListener("submit", (event) => {
                         actions
                     );
                     break;
+                }
+                case "fight": {
+                    let { newPlayerData, newWorldData, currentRoom } =
+                        response.data;
+                    // Update player and world data
+                    player = newPlayerData;
+                    world = newWorldData;
+
+                    // Refresh action lsit
+                    actions = currentRoom.actions;
+
+                    displayCurrentRoom(
+                        currentRoom.name,
+                        currentRoom.description,
+                        actions
+                    );
+                    break;
+                }
                 default:
                     // Handle invalid action
                     res.send(400, "Invalid action type");
