@@ -10,5 +10,14 @@ How to run this project on your machine:\
 To start server:\
 `node server.js`
 
+Making a new branch and switch to it:
+`git checkout -b your_branch_name`
 
-`git pull` before you start working on the project
+Commit all your changes on a branch:
+`git commit -a -m 'some message'`
+
+Merge your branch to main:
+`git checkout master`
+`git merge hotfix`
+
+`git pull origin main` before you start working on the branch
