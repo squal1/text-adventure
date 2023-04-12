@@ -1,0 +1,190 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    background-color: #f9f9f9;
+    color: #333;
+
+    overflow-x: hidden;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+}
+
+h1 {
+    font-size: 2em;
+    margin: 0;
+}
+
+main {
+    /*max-width: 800px;*/
+    margin: auto;
+    padding: 20px;
+}
+
+p {
+    margin-bottom: 10px;
+}
+
+.actions {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.actions button {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.actions button:hover {
+    background-color: #555;
+}
+
+form {
+    display: flex;
+    margin-top: 20px;
+}
+
+label {
+    display: block;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+input[type="text"] {
+    flex: 1;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    margin-right: 10px;
+}
+
+button[type="submit"] {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+button[type="submit"]:hover {
+    background-color: #555;
+}
+
+.imagebox {
+    border: solid black;
+    margin: auto;
+    /*background-image: url("cave_entrance.jpg");*/
+    /*background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;*/
+    
+    height: 50vh;
+    /*width: 50vw;*/
+}
+
+.imagebox img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.textbox {
+    height: 50vh;
+    float: left;
+    border: solid black;
+}
+
+
+/*Map Stuff*/
+
+.map {
+    width: 100vw;
+    height: 100vw;
+    background-image: url("paper.jpg");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    border: solid rgb(59, 50, 30);
+
+    margin: auto;
+}
+
+.row {
+    width: 100vw;
+    height: calc(100vw/9);
+    margin: auto;
+    clear: both;
+}
+
+.map span {
+    display: block;
+    width: calc(100vw/9);
+    height: calc(100vw/9);
+    float: left;
+
+    visibility: visible;
+}
+
+.map span p{
+    text-align: center;
+
+    font-size: calc(100vw/55);
+}
+
+.map .row span.active p {
+    visibility: visible;
+}
+.map .row span.hidden p{
+    visibility: hidden;
+}
+
+.map .row span.active {
+    border: solid rgb(59, 50, 30);
+}
+.map .row span.current {
+    background-color: rgb(243, 232, 74);
+}
+.map .row span.hidden {
+    border: none;
+}
+
+/*Maybe don't need?*/
+.row::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+
+
+/*Divides the page elements into 10 columns of equal width*/
+/*Give a div a class "col-" + the # of columns wide it should be*/
+.col-1 {width: 10vw;}
+.col-2 {width: 20vw;}
+.col-3 {width: 30vw;}
+.col-4 {width: 40vw;}
+.col-5 {width: 50vw;}
+.col-6 {width: 60vw;}
+.col-7 {width: 70vw;}
+.col-8 {width: 80vw;}
+.col-9 {width: 90vw;}
+.col-10 {width: 100vw;}
