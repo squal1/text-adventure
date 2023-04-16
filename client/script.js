@@ -144,6 +144,9 @@ window.addEventListener("load", () => {
         .catch((error) => {
             console.error(error);
         });
+
+    createMap(dungeonRooms);
+    updateMap(discoveredRooms, currentRoom);
 });
 
 // Call the API when input is submitted
@@ -231,3 +234,97 @@ document.querySelector("form").addEventListener("submit", (event) => {
     // Clear the input field
     inputField.value = "";
 });
+
+const createMap = (dungeonRooms) => {
+    //Create base grid layout
+
+    const map = document.querySelector(`.map`);
+    //Y coordinate (row number)
+    for (var y = 0; y < 9; y++) {
+        let div = document.createElement("div");
+        div.classList.add(`row`);
+
+        //X coordinate (column number)
+        for (var x = 0; x < 9; x++) {
+            let span = document.createElement("span");
+            span.classList.add(`r${x}${y}`);
+            span.innerHTML = "123";
+            div.append(span);
+        }
+
+        map.append(div);
+    }
+
+    //Add names to rooms
+    for (var i = 0; i < dungeonRooms.length; i++) {
+        var arr = dungeonRooms[i];
+        const room = document.querySelector(`.${arr[0]}`);
+        let p = document.createElement("p");
+
+        p.innerHTML = arr[1];
+        console.log(p);
+        room.append(p);
+    }
+};
+
+//Updates the map to reveal discovered rooms
+const updateMap = (discoveredRooms, currentRoom) => {
+    //Make all rooms invisible
+    spans = document.querySelectorAll(".map .row span");
+    for (span in spans) {
+        span.addClass("hidden");
+    }
+
+    //Make all discovered rooms visible
+    for (var i = 0; i < discoveredRooms.length; i++) {
+        room = document.querySelector("." + discoveredRooms[i]);
+        room.removeClass("hidden");
+        room.addClass("active");
+    }
+
+    //Mark current room on map
+    curRoom = document.querySelector("." + currentRoom);
+    curRoom.addClass("current");
+};
+
+//The map is a 9x9 grid. This variable stores the rooms that the player has
+//already entered in coordinate form rxy, where x and y are numbers ranging
+//from 0-8, spanning left to right and top to bottom. r40 is the starting room.
+var discoveredRooms = [
+    "r40",
+    "r41",
+    "r42",
+    "r51",
+    "r61",
+    "r43",
+    "r44",
+    "r34",
+    "r24",
+    "r45",
+    "r55",
+    "r65",
+    "r46",
+    "r47",
+];
+//The room the player currently resides in
+var currentRoom = "r40";
+
+//Array of room name to coordinates pairs (format: [[rxy,roomName],[rxy,roomName],...] where xy is the coordinates and roomName is the name of the room)
+var dungeonRooms = [
+    ["r40", "Entrance"],
+    ["r41", "Cave"],
+    ["r42", "Dark Room"],
+    ["r51", "Cave-In Room"],
+    ["r61", "Cave Clearing"],
+    ["r43", "Door Room"],
+    ["r24", "Tomb"],
+    ["r34", "Catacombs"],
+    ["r44", "Well"],
+    ["r45", "Leaky Passage"],
+    ["r55", "Puzzle Door Room"],
+    ["r65", "Treasure Stash"],
+    ["r46", "Boss Room"],
+    ["r47", "Exit"],
+];
+
+// updateMap(discoveredRooms, currentRoom);

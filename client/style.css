@@ -29,12 +29,15 @@ body {
 }
 
 .map-info {
+    display: flex;
+    flex-direction: column;
     padding: 10px;
+    flex: 1;
+    position: relative;
 }
 
 .player {
     padding: 10px;
-    margin-top: auto;
     display: flex;
     height: 25%;
     justify-content: space-around;
@@ -66,21 +69,15 @@ li:not(:last-child) {
     margin-bottom: 5px;
 }
 
-p {
+.player p,
+.dialogue p {
     margin-bottom: 10px;
-}
-
-.actions {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
 }
 
 form {
     margin-bottom: 1rem;
     margin-top: auto;
     display: flex;
-    /* padding: 10px; */
 }
 
 label {
@@ -108,4 +105,102 @@ button[type="submit"] {
 
 button[type="submit"]:hover {
     background-color: #a9a9a9;
+}
+
+/*Map Stuff*/
+
+.map-wrapper {
+    width: 100%;
+    padding-bottom: 100%;
+    position: relative;
+    /* background-color: rgb(255, 164, 45); */
+    background-image: url("./paper.jpg");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    border: solid rgb(59, 50, 30);
+}
+
+.map {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.row {
+    width: 100%;
+    height: calc(100% / 9);
+    margin: auto;
+    clear: both;
+}
+
+.map span {
+    display: block;
+    width: calc(100% / 9);
+    height: calc(100% / 9);
+    float: left;
+
+    visibility: visible;
+}
+
+.map span p {
+    text-align: center;
+
+    font-size: calc(100% / 55);
+}
+
+.map .row span.active p {
+    visibility: visible;
+}
+.map .row span.hidden p {
+    visibility: hidden;
+}
+
+.map .row span.active {
+    border: solid rgb(59, 50, 30);
+}
+.map .row span.current {
+    background-color: rgb(243, 232, 74);
+}
+.map .row span.hidden {
+    border: none;
+}
+
+/*Maybe don't need?*/
+.row::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+/*Divides the page elements into 10 columns of equal width*/
+/*Give a div a class "col-" + the # of columns wide it should be*/
+.col-1 {
+    width: 10%;
+}
+.col-2 {
+    width: 20%;
+}
+.col-3 {
+    width: 30%;
+}
+.col-4 {
+    width: 40%;
+}
+.col-5 {
+    width: 50%;
+}
+.col-6 {
+    width: 60%;
+}
+.col-7 {
+    width: 70%;
+}
+.col-8 {
+    width: 80%;
+}
+.col-9 {
+    width: 90%;
+}
+.col-10 {
+    width: 100%;
 }

@@ -95,7 +95,7 @@ button[type="submit"]:hover {
     /*background-repeat: no-repeat;
     background-size: cover;
     background-position: center;*/
-    
+
     height: 50vh;
     /*width: 50vw;*/
 }
@@ -114,7 +114,6 @@ button[type="submit"]:hover {
     border: solid black;
 }
 
-
 /*Map Stuff*/
 
 .map {
@@ -130,30 +129,30 @@ button[type="submit"]:hover {
 
 .row {
     width: 100vw;
-    height: calc(100vw/9);
+    height: calc(100vw / 9);
     margin: auto;
     clear: both;
 }
 
 .map span {
     display: block;
-    width: calc(100vw/9);
-    height: calc(100vw/9);
+    width: calc(100vw / 9);
+    height: calc(100vw / 9);
     float: left;
 
     visibility: visible;
 }
 
-.map span p{
+.map span p {
     text-align: center;
 
-    font-size: calc(100vw/55);
+    font-size: calc(100vw / 55);
 }
 
 .map .row span.active p {
     visibility: visible;
 }
-.map .row span.hidden p{
+.map .row span.hidden p {
     visibility: hidden;
 }
 
@@ -174,17 +173,35 @@ button[type="submit"]:hover {
     display: table;
 }
 
-
-
 /*Divides the page elements into 10 columns of equal width*/
 /*Give a div a class "col-" + the # of columns wide it should be*/
-.col-1 {width: 10vw;}
-.col-2 {width: 20vw;}
-.col-3 {width: 30vw;}
-.col-4 {width: 40vw;}
-.col-5 {width: 50vw;}
-.col-6 {width: 60vw;}
-.col-7 {width: 70vw;}
-.col-8 {width: 80vw;}
-.col-9 {width: 90vw;}
-.col-10 {width: 100vw;}
+.col-1 {
+    width: 10vw;
+}
+.col-2 {
+    width: 20vw;
+}
+.col-3 {
+    width: 30vw;
+}
+.col-4 {
+    width: 40vw;
+}
+.col-5 {
+    width: 50vw;
+}
+.col-6 {
+    width: 60vw;
+}
+.col-7 {
+    width: 70vw;
+}
+.col-8 {
+    width: 80vw;
+}
+.col-9 {
+    width: 90vw;
+}
+.col-10 {
+    width: 100vw;
+}
