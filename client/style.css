@@ -8,25 +8,62 @@ body {
     font-family: Arial, sans-serif;
     font-size: 16px;
     line-height: 1.5;
-    background-color: #f9f9f9;
-    color: #333;
+    background-color: #282828;
+    color: #d8d8d8;
 }
 
-header {
-    background-color: #333;
-    color: #fff;
+.main-container {
+    background-color: #303030;
+    display: flex;
+    justify-content: center;
+    width: 70%;
+    height: 100vh;
+    margin: auto;
+}
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    border-right: 1px solid #131313;
+}
+
+.map-info {
     padding: 10px;
 }
 
-h1 {
-    font-size: 2em;
-    margin: 0;
+.player {
+    padding: 10px;
+    margin-top: auto;
+    display: flex;
+    height: 25%;
+    justify-content: space-around;
+    border-top: 1px solid #131313;
 }
 
-main {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
+.dialogue {
+    display: flex;
+    flex-direction: column;
+    flex: 2;
+    padding: 10px;
+}
+
+.text-wrapper {
+    position: relative;
+    flex-grow: 1;
+    margin-bottom: 1rem;
+    overflow-y: scroll;
+}
+
+.text {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    overflow-y: scroll;
+}
+
+li:not(:last-child) {
+    margin-bottom: 5px;
 }
 
 p {
@@ -39,24 +76,11 @@ p {
     flex-wrap: wrap;
 }
 
-.actions button {
-    background-color: #333;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    padding: 10px;
-    margin-right: 10px;
-    margin-bottom: 10px;
-    cursor: pointer;
-}
-
-.actions button:hover {
-    background-color: #555;
-}
-
 form {
+    margin-bottom: 1rem;
+    margin-top: auto;
     display: flex;
-    margin-top: 20px;
+    /* padding: 10px; */
 }
 
 label {
@@ -74,8 +98,8 @@ input[type="text"] {
 }
 
 button[type="submit"] {
-    background-color: #333;
-    color: #fff;
+    background-color: #d8d8d8;
+    color: #282828;
     border: none;
     border-radius: 5px;
     padding: 10px;
@@ -83,5 +107,5 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-    background-color: #555;
+    background-color: #a9a9a9;
 }

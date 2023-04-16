@@ -11,7 +11,6 @@ const typeWriter = (text, className, i = 0) => {
     return new Promise((resolve, reject) => {
         const element = document.querySelector(`.${className}`);
         if (!element) {
-            console.log(text, className);
             reject(
                 new Error(`Element with class name '${className}' not found.`)
             );
@@ -32,6 +31,19 @@ const typeWriter = (text, className, i = 0) => {
     });
 };
 
+const printText = async (text) => {
+    let li = document.createElement("li");
+
+    const parent = document.querySelector(`.text`);
+
+    const childElements = Array.from(parent.children);
+    const numChildElements = childElements.length;
+
+    li.classList.add(`description${numChildElements}`);
+    parent.append(li);
+    await typeWriter(text, `description${numChildElements}`);
+};
+
 // This function displays the current room name, description, and list of available actions using the typeWriter function.
 const displayCurrentRoom = async (roomName, description, actions) => {
     // Not allowing input during the function
@@ -39,13 +51,12 @@ const displayCurrentRoom = async (roomName, description, actions) => {
     inputField.disabled = true;
 
     await typeWriter(roomName, "current-room");
-    await typeWriter(description, "description");
+    printText(description);
 
     // Loop through each action in array and display it using the typeWriter function
     let i = 0;
     while (i < actions.length) {
         const action = actions[i];
-        console.log(action);
         // Check if the action is a "collect" action and if the item has already been collected, remove it from the array.
         if (action.type == "collect" && action.item in player.items) {
             actions.splice(i, 1);
@@ -65,31 +76,49 @@ const displayCurrentRoom = async (roomName, description, actions) => {
             continue;
         }
         // Write action into action list
-        let div = document.createElement("div");
-        div.classList.add(`action${i}`);
-        parent = document.querySelector(`.actions`);
-        parent.append(div);
-        await typeWriter(`${i + 1}. ${action.description}`, `action${i}`);
+        let li = document.createElement("li");
+
+        const parent = document.querySelector(`.text`);
+        const childElements = Array.from(parent.children);
+        const numChildElements = childElements.length;
+
+        li.classList.add(`action${numChildElements}`);
+        parent.append(li);
+        await typeWriter(
+            `${i + 1}. ${action.description}`,
+            `action${numChildElements}`
+        );
         i++;
     }
+
     inputField.disabled = false;
 };
 
 // Update item list on display
 const updateItems = async (newItem) => {
-    let div = document.createElement("p");
+    let p = document.createElement("p");
 
     const parent = document.querySelector(`.items`);
 
     const childElements = Array.from(parent.children);
     const numChildElements = childElements.length;
 
-    div.classList.add(`item${numChildElements + 1}`);
-    parent.append(div);
+    p.classList.add(`item${numChildElements}`);
+    parent.append(p);
     await typeWriter(
-        `${numChildElements + 1}. ${newItem}`,
-        `item${numChildElements + 1}`
+        `${numChildElements}. ${newItem}`,
+        `item${numChildElements}`
     );
+};
+
+const updatePlayer = async (player) => {
+    // Clear old text
+    document.querySelector(".hp").innerHTML = "";
+    document.querySelector(".attack").innerHTML = "";
+
+    stats = player.stats;
+    await typeWriter(`${stats["hp"]}`, `hp`);
+    await typeWriter(`${stats["attack"]}`, `attack`);
 };
 
 // Fetch all the game data when the website is initialized
@@ -102,6 +131,8 @@ window.addEventListener("load", () => {
             world = response.data.world;
             currentRoom = response.data.currentRoom;
             actions = currentRoom.actions;
+
+            updatePlayer(player);
 
             // Write text to browser
             displayCurrentRoom(
@@ -131,12 +162,12 @@ document.querySelector("form").addEventListener("submit", (event) => {
         return;
     }
 
+    printText(inputValue);
+    printText("-------------------------------------------------");
     const action = actions[inputValue - 1];
 
     // Clear old text
     document.querySelector(".current-room").innerHTML = "";
-    document.querySelector(".description").innerHTML = "";
-    document.querySelector(".actions").innerHTML = "";
 
     // Call the API with the input value
     axios
@@ -178,6 +209,8 @@ document.querySelector("form").addEventListener("submit", (event) => {
 
                     // Refresh action lsit
                     actions = currentRoom.actions;
+
+                    updatePlayer(player);
 
                     displayCurrentRoom(
                         currentRoom.name,
