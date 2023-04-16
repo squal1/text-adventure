@@ -248,7 +248,7 @@ const createMap = (dungeonRooms) => {
         for (var x = 0; x < 9; x++) {
             let span = document.createElement("span");
             span.classList.add(`r${x}${y}`);
-            span.innerHTML = "123";
+            // span.innerHTML = "1";
             div.append(span);
         }
 
@@ -262,7 +262,6 @@ const createMap = (dungeonRooms) => {
         let p = document.createElement("p");
 
         p.innerHTML = arr[1];
-        console.log(p);
         room.append(p);
     }
 };
@@ -270,21 +269,25 @@ const createMap = (dungeonRooms) => {
 //Updates the map to reveal discovered rooms
 const updateMap = (discoveredRooms, currentRoom) => {
     //Make all rooms invisible
-    spans = document.querySelectorAll(".map .row span");
-    for (span in spans) {
-        span.addClass("hidden");
-    }
-
+    var spans = document.querySelectorAll(".map .row span");
+    console.log(spans);
+    // for (span in spans) {
+    //     span.classList.add("hidden");
+    // }
+    [].forEach.call(spans, (el) => {
+        // except for the element clicked, remove active class
+        el.classList.add("hidden");
+    });
     //Make all discovered rooms visible
     for (var i = 0; i < discoveredRooms.length; i++) {
         room = document.querySelector("." + discoveredRooms[i]);
-        room.removeClass("hidden");
-        room.addClass("active");
+        room.classList.remove("hidden");
+        room.classList.add("active");
     }
 
     //Mark current room on map
     curRoom = document.querySelector("." + currentRoom);
-    curRoom.addClass("current");
+    curRoom.classList.add("current");
 };
 
 //The map is a 9x9 grid. This variable stores the rooms that the player has
