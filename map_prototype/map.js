@@ -41,6 +41,17 @@ var main = function () {
         $("." + currentRoom).addClass("current");
     }
 
+    //Displays the room image ("room") or the map ("map") in the image box, depending on the argument passed in
+    var swapMap = function (swap) {
+        $(".map").hide()
+        $(".room_image").hide();
+        if (swap === "map") {
+            $(".map").show();
+        } else {
+            $(".room_image").show();
+        }
+    }
+
     //The map is a 9x9 grid. This variable stores the rooms that the player has
     //already entered in coordinate form rxy, where x and y are numbers ranging
     //from 0-8, spanning left to right and top to bottom. r40 is the starting room.
@@ -53,6 +64,8 @@ var main = function () {
 
     createMap(dungeonRooms);
     updateMap(discoveredRooms, currentRoom);
+    swapMap("room");
+    swapMap("map");
 }
 
 $(document).ready(main);
