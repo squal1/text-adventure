@@ -222,8 +222,12 @@ document.querySelector("form").addEventListener("submit", (event) => {
                     break;
                 }
                 case "fight": {
-                    let { newPlayerData, newWorldData, currentRoom } =
-                        response.data;
+                    let {
+                        newPlayerData,
+                        newWorldData,
+                        currentRoom,
+                        battleResultMessage,
+                    } = response.data;
                     // Update player and world data
                     player = newPlayerData;
                     world = newWorldData;
@@ -238,6 +242,8 @@ document.querySelector("form").addEventListener("submit", (event) => {
                         currentRoom.description,
                         actions
                     );
+
+                    printText(battleResultMessage);
                     break;
                 }
                 default:
