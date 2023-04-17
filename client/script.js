@@ -4,6 +4,8 @@ var player;
 var world;
 var actions;
 
+var dungeonRooms;
+
 axios.defaults.baseURL = "http://localhost:8000";
 
 // This function provides a typing animation effect for displaying the given text in the specified class name element.
@@ -140,13 +142,23 @@ window.addEventListener("load", () => {
                 currentRoom.description,
                 actions
             );
+            
+            //Map
+            //console.log(world.dungeonRooms);
+            createMap(world.dungeonRooms);
+            console.log(world.discoveredRooms);
+            console.log(world.currentRoom);
+            updateMap(world.discoveredRooms, world.currentRoom);
         })
         .catch((error) => {
             console.error(error);
         });
 
-    createMap(dungeonRooms);
-    updateMap(discoveredRooms, currentRoom);
+    //console.log("world: " + world);
+    //console.log("dungeonRooms: " + dungeonRooms);
+    //console.log("currentRoom: " + currentRoom);
+    //createMap(dungeonRooms);
+    //updateMap(discoveredRooms, currentRoom);
 });
 
 // Call the API when input is submitted
@@ -288,8 +300,11 @@ const updateMap = (discoveredRooms, currentRoom) => {
     //Mark current room on map
     curRoom = document.querySelector("." + currentRoom);
     curRoom.classList.add("current");
+    console.log("currentRoom:");
+    console.log(currentRoom);
 };
 
+/*
 //The map is a 9x9 grid. This variable stores the rooms that the player has
 //already entered in coordinate form rxy, where x and y are numbers ranging
 //from 0-8, spanning left to right and top to bottom. r40 is the starting room.
@@ -309,11 +324,12 @@ var discoveredRooms = [
     "r46",
     "r47",
 ];
+*/
 //The room the player currently resides in
-var currentRoom = "r40";
+//var currentRoom = "r40";
 
 //Array of room name to coordinates pairs (format: [[rxy,roomName],[rxy,roomName],...] where xy is the coordinates and roomName is the name of the room)
-var dungeonRooms = [
+/*var dungeonRooms = [
     ["r40", "Entrance"],
     ["r41", "Cave"],
     ["r42", "Dark Room"],
@@ -329,5 +345,5 @@ var dungeonRooms = [
     ["r46", "Boss Room"],
     ["r47", "Exit"],
 ];
-
+*/
 // updateMap(discoveredRooms, currentRoom);

@@ -75,7 +75,44 @@
     },
 
     "world": {
-        "solvedPuzzleRooms": {},
-        "clearedRooms": {}
+        "solvedPuzzleRooms": [],
+        "clearedRooms": [],
+
+
+        "dungeonRooms": [
+            ["r40", "Entrance"],
+            ["r41", "Cave"],
+            ["r42", "Dark Room"],
+            ["r51", "Cave-In Room"],
+            ["r61", "Cave Clearing"],
+            ["r43", "Door Room"],
+            ["r24", "Tomb"],
+            ["r34", "Catacombs"],
+            ["r44", "Well"],
+            ["r45", "Leaky Passage"],
+            ["r55", "Puzzle Door Room"],
+            ["r65", "Treasure Stash"],
+            ["r46", "Boss Room"],
+            ["r47", "Exit"]
+        ],
+
+        "discoveredRooms": [
+            "r40",
+            "r41",
+            "r42",
+            "r51",
+            "r61",
+            "r43",
+            "r44",
+            "r34",
+            "r24",
+            "r45",
+            "r55",
+            "r65",
+            "r46",
+            "r47"
+        ],
+
+        "currentRoom": "r40"
     }
 }
