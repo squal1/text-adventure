@@ -86,6 +86,7 @@ const displayCurrentRoom = async (roomName, description, actions) => {
 
         li.classList.add(`action${numChildElements}`);
         parent.append(li);
+        li.scrollIntoView();
         await typeWriter(
             `${i + 1}. ${action.description}`,
             `action${numChildElements}`
@@ -142,7 +143,7 @@ window.addEventListener("load", () => {
                 currentRoom.description,
                 actions
             );
-            
+
             //Map
             //console.log(world.dungeonRooms);
             createMap(world.dungeonRooms);
