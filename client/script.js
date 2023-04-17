@@ -95,6 +95,7 @@ const displayCurrentRoom = async (roomName, description, actions) => {
     }
 
     inputField.disabled = false;
+    inputField.focus();
 };
 
 // Update item list on display
