@@ -145,6 +145,10 @@ window.addEventListener("load", () => {
                 actions
             );
 
+            for (item in player.items) {
+                updateItems(item);
+            }
+
             //Map
             //console.log(world.dungeonRooms);
             createMap(world.dungeonRooms);
