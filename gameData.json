@@ -75,9 +75,8 @@
     },
 
     "world": {
-        "solvedPuzzleRooms": [],
-        "clearedRooms": [],
-
+        "solvedPuzzleRooms": {},
+        "clearedRooms": {},
 
         "dungeonRooms": [
             ["r40", "Entrance"],
