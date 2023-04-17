@@ -109,6 +109,22 @@ button[type="submit"]:hover {
     background-color: #a9a9a9;
 }
 
+/*Room Image Stuff*/
+.roomDisplay {
+    width: 100%;
+    padding-bottom: 100%;
+    position: relative;
+    background-image: url("./paper.jpg");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    border: solid rgb(59, 50, 30);
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+
+
 /*Map Stuff*/
 
 .map-wrapper {
@@ -120,6 +136,7 @@ button[type="submit"]:hover {
     background-repeat: no-repeat;
     background-size: 100%;
     border: solid rgb(59, 50, 30);
+    clear: both;
 }
 
 .map {
