@@ -154,11 +154,6 @@ window.addEventListener("load", () => {
             console.error(error);
         });
 
-    //console.log("world: " + world);
-    //console.log("dungeonRooms: " + dungeonRooms);
-    //console.log("currentRoom: " + currentRoom);
-    //createMap(dungeonRooms);
-    //updateMap(discoveredRooms, currentRoom);
 });
 
 // Call the API when input is submitted
@@ -247,6 +242,13 @@ document.querySelector("form").addEventListener("submit", (event) => {
     inputField.value = "";
 });
 
+
+
+
+
+
+
+//MAP FUNCTIONS
 const createMap = (dungeonRooms) => {
     //Create base grid layout
 
@@ -303,6 +305,14 @@ const updateMap = (discoveredRooms, currentRoom) => {
     console.log("currentRoom:");
     console.log(currentRoom);
 };
+
+
+
+
+
+
+
+
 
 /*
 //The map is a 9x9 grid. This variable stores the rooms that the player has
