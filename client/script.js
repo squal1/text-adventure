@@ -4,6 +4,8 @@ var player;
 var world;
 var actions;
 
+var dungeonRooms;
+
 axios.defaults.baseURL = "http://localhost:8000";
 
 // This function provides a typing animation effect for displaying the given text in the specified class name element.
@@ -11,7 +13,6 @@ const typeWriter = (text, className, i = 0) => {
     return new Promise((resolve, reject) => {
         const element = document.querySelector(`.${className}`);
         if (!element) {
-            console.log(text, className);
             reject(
                 new Error(`Element with class name '${className}' not found.`)
             );
@@ -32,6 +33,19 @@ const typeWriter = (text, className, i = 0) => {
     });
 };
 
+const printText = async (text) => {
+    let li = document.createElement("li");
+
+    const parent = document.querySelector(`.text`);
+
+    const childElements = Array.from(parent.children);
+    const numChildElements = childElements.length;
+
+    li.classList.add(`description${numChildElements}`);
+    parent.append(li);
+    await typeWriter(text, `description${numChildElements}`);
+};
+
 // This function displays the current room name, description, and list of available actions using the typeWriter function.
 const displayCurrentRoom = async (roomName, description, actions) => {
     // Not allowing input during the function
@@ -39,13 +53,12 @@ const displayCurrentRoom = async (roomName, description, actions) => {
     inputField.disabled = true;
 
     await typeWriter(roomName, "current-room");
-    await typeWriter(description, "description");
+    printText(description);
 
     // Loop through each action in array and display it using the typeWriter function
     let i = 0;
     while (i < actions.length) {
         const action = actions[i];
-        console.log(action);
         // Check if the action is a "collect" action and if the item has already been collected, remove it from the array.
         if (action.type == "collect" && action.item in player.items) {
             actions.splice(i, 1);
@@ -65,31 +78,51 @@ const displayCurrentRoom = async (roomName, description, actions) => {
             continue;
         }
         // Write action into action list
-        let div = document.createElement("div");
-        div.classList.add(`action${i}`);
-        parent = document.querySelector(`.actions`);
-        parent.append(div);
-        await typeWriter(`${i + 1}. ${action.description}`, `action${i}`);
+        let li = document.createElement("li");
+
+        const parent = document.querySelector(`.text`);
+        const childElements = Array.from(parent.children);
+        const numChildElements = childElements.length;
+
+        li.classList.add(`action${numChildElements}`);
+        parent.append(li);
+        li.scrollIntoView();
+        await typeWriter(
+            `${i + 1}. ${action.description}`,
+            `action${numChildElements}`
+        );
         i++;
     }
+
     inputField.disabled = false;
+    inputField.focus();
 };
 
 // Update item list on display
 const updateItems = async (newItem) => {
-    let div = document.createElement("p");
+    let p = document.createElement("p");
 
     const parent = document.querySelector(`.items`);
 
     const childElements = Array.from(parent.children);
     const numChildElements = childElements.length;
 
-    div.classList.add(`item${numChildElements + 1}`);
-    parent.append(div);
+    p.classList.add(`item${numChildElements}`);
+    parent.append(p);
     await typeWriter(
-        `${numChildElements + 1}. ${newItem}`,
-        `item${numChildElements + 1}`
+        `${numChildElements}. ${newItem}`,
+        `item${numChildElements}`
     );
+};
+
+const updatePlayer = async (player) => {
+    // Clear old text
+    document.querySelector(".hp").innerHTML = "";
+    document.querySelector(".attack").innerHTML = "";
+
+    stats = player.stats;
+    await typeWriter(`${stats["hp"]}`, `hp`);
+    await typeWriter(`${stats["attack"]}`, `attack`);
 };
 
 // Fetch all the game data when the website is initialized
@@ -103,12 +136,25 @@ window.addEventListener("load", () => {
             currentRoom = response.data.currentRoom;
             actions = currentRoom.actions;
 
+            updatePlayer(player);
+
             // Write text to browser
             displayCurrentRoom(
                 currentRoom.name,
                 currentRoom.description,
                 actions
             );
+
+            for (item in player.items) {
+                updateItems(item);
+            }
+
+            //Map
+            //console.log(world.dungeonRooms);
+            createMap(world.dungeonRooms);
+            console.log(world.discoveredRooms);
+            console.log(world.currentRoom);
+            updateMap(world.discoveredRooms, world.currentRoom);
         })
         .catch((error) => {
             console.error(error);
@@ -131,12 +177,12 @@ document.querySelector("form").addEventListener("submit", (event) => {
         return;
     }
 
+    printText(inputValue);
+    printText("-------------------------------------------------");
     const action = actions[inputValue - 1];
 
     // Clear old text
     document.querySelector(".current-room").innerHTML = "";
-    document.querySelector(".description").innerHTML = "";
-    document.querySelector(".actions").innerHTML = "";
 
     // Call the API with the input value
     axios
@@ -170,8 +216,12 @@ document.querySelector("form").addEventListener("submit", (event) => {
                     break;
                 }
                 case "fight": {
-                    let { newPlayerData, newWorldData, currentRoom } =
-                        response.data;
+                    let {
+                        newPlayerData,
+                        newWorldData,
+                        currentRoom,
+                        battleResultMessage,
+                    } = response.data;
                     // Update player and world data
                     player = newPlayerData;
                     world = newWorldData;
@@ -179,11 +229,15 @@ document.querySelector("form").addEventListener("submit", (event) => {
                     // Refresh action lsit
                     actions = currentRoom.actions;
 
+                    updatePlayer(player);
+
                     displayCurrentRoom(
                         currentRoom.name,
                         currentRoom.description,
                         actions
                     );
+
+                    printText(battleResultMessage);
                     break;
                 }
                 default:
@@ -198,3 +252,95 @@ document.querySelector("form").addEventListener("submit", (event) => {
     // Clear the input field
     inputField.value = "";
 });
+
+//MAP FUNCTIONS
+const createMap = (dungeonRooms) => {
+    //Create base grid layout
+
+    const map = document.querySelector(`.map`);
+    //Y coordinate (row number)
+    for (var y = 0; y < 9; y++) {
+        let div = document.createElement("div");
+        div.classList.add(`row`);
+
+        //X coordinate (column number)
+        for (var x = 0; x < 9; x++) {
+            let span = document.createElement("span");
+            span.classList.add(`r${x}${y}`);
+            // span.innerHTML = "1";
+            div.append(span);
+        }
+
+        map.append(div);
+    }
+
+    //Add names to rooms
+    for (var i = 0; i < dungeonRooms.length; i++) {
+        var arr = dungeonRooms[i];
+        const room = document.querySelector(`.${arr[0]}`);
+        let p = document.createElement("p");
+
+        p.innerHTML = arr[1];
+        room.append(p);
+    }
+};
+
+//Updates the map to reveal discovered rooms
+const updateMap = (discoveredRooms, currentRoom) => {
+    //Make all rooms invisible
+    var spans = document.querySelectorAll(".map .row span");
+    console.log(spans);
+    // for (span in spans) {
+    //     span.classList.add("hidden");
+    // }
+    [].forEach.call(spans, (el) => {
+        // except for the element clicked, remove active class
+        el.classList.add("hidden");
+    });
+    //Make all discovered rooms visible
+    for (var i = 0; i < discoveredRooms.length; i++) {
+        room = document.querySelector("." + discoveredRooms[i]);
+        room.classList.remove("hidden");
+        room.classList.add("active");
+    }
+
+    //Mark current room on map
+    curRoom = document.querySelector("." + currentRoom);
+    curRoom.classList.add("current");
+    console.log("currentRoom:");
+    console.log(currentRoom);
+};
+
+//Updates the background of the current room
+//roomImageUrl: "bgimageurl"
+//enemyList: [["enemyimageurl", number of enemy], ["enemyimageurl", number of enemy]]
+// const updateRoomImage = (roomImageUrl, enemyList) => {
+//     //Update the background
+//     selector = document.querySelector(".roomDisplay");
+//     console.log(selector);
+//     selector.style.backgroundImage = "url('" + roomImageUrl + "')";
+
+//     //Update the enemies
+//     if (enemyList.length > 0) {
+//         //Loop through enemy list
+//         for (i = 0; i < enemyList.length; i++) {
+//             //Pull an enemy entry from array
+//             var enemy = enemyList[i];
+//             //Place the provided number of that enemy on the screen
+//             for (n = 0; n < enemy[1]; n++) {
+//                 let img = document.createElement("img");
+//                 img.src = enemy[0];
+//                 selector.append(img);
+//             }
+//         }
+//     } else {
+//         console.log("no enemies in room");
+//     }
+// };
+
+//var enemyArr = [];
+// var enemyArr = [
+//     ["slime.png", 10],
+//     ["dragon.png", 1],
+// ];
+// updateRoomImage("paper.jpg", enemyArr);

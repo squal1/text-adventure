@@ -6,23 +6,43 @@
         <link rel="stylesheet" type="text/css" href="style.css" />
     </head>
     <body>
-        <header>
+        <!-- <header>
             <h1>Text adventure</h1>
-        </header>
+        </header> -->
         <main>
-            <p>Items:</p>
-            <div class="items"></div>
-            <p>Current Room:</p>
-            <p class="current-room"></p>
-            <p>Description:</p>
-            <p class="description"></p>
-            <p>Actions</p>
-            <div class="actions"></div>
-            <form>
-                <label for="inputField">Input:</label>
-                <input type="text" id="inputField" name="inputField" />
-                <button type="submit">Submit</button>
-            </form>
+            <div class="main-container">
+                <div class="sidebar">
+                    <h2>Text adventure</h2>
+                    <div class="map-info">
+                        <p>Current Room: <span class="current-room"></span></p>
+                        <div class="map-wrapper">
+                            <div class="map"></div>
+                        </div>
+                    </div>
+                    <div class="player">
+                        <div class="stats">
+                            <p>Stats:</p>
+                            <p>HP: <span class="hp"></span></p>
+                            <p>Attack:<span class="attack"></span></p>
+                        </div>
+                        <div class="items">
+                            <p>Items:</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dialogue">
+                    <!-- <div class="roomDisplay"></div> -->
+                    <div class="text-wrapper">
+                        <ul class="text"></ul>
+                    </div>
+                    <form>
+                        <label for="inputField">Input:</label>
+                        <input type="text" id="inputField" name="inputField" />
+                        <button type="submit">Submit</button>
+                    </form>
+                </div>
+            </div>
         </main>
         <footer></footer>
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>

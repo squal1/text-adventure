@@ -50,7 +50,16 @@ app.post("/action", (req, res) => {
             newPlayerData = player;
             newWorldData = world;
 
-            res.status(200).send({ newPlayerData, newWorldData, currentRoom });
+            battleResultMessage = `You defeated the enemy with ${numOfRounds} hits. You took ${enemyAtk} * ${enemyHp} = ${
+                enemyAtk * numOfRounds
+            } damage from the battle.`;
+
+            res.status(200).send({
+                newPlayerData,
+                newWorldData,
+                currentRoom,
+                battleResultMessage,
+            });
 
             // Handle fight action
             break;
@@ -63,3 +72,17 @@ app.post("/action", (req, res) => {
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
 });
+
+
+
+
+//WHAT TO PUSH TO DATABASE (Save data)
+//Player Stats (stats, items)
+//Cleared Conditions (puzzles, enemies)
+//Discovered Rooms
+//Current Room
+
+//IDEAS
+//Keep json file, push crucial save data to server
+//Update game with json file, but push data when the user saves
+//When the user loads, 

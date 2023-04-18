@@ -8,55 +8,78 @@ body {
     font-family: Arial, sans-serif;
     font-size: 16px;
     line-height: 1.5;
-    background-color: #f9f9f9;
-    color: #333;
+    background-color: #282828;
+    color: #d8d8d8;
 }
 
-header {
-    background-color: #333;
-    color: #fff;
-    padding: 10px;
+.main-container {
+    background-color: #303030;
+    display: flex;
+    justify-content: center;
+    width: 70%;
+    height: 100vh;
+    margin: auto;
 }
 
-h1 {
-    font-size: 2em;
-    margin: 0;
-}
-
-main {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-p {
-    margin-bottom: 10px;
-}
-
-.actions {
+.sidebar {
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
+    flex: 1;
+    border-right: 1px solid #131313;
 }
 
-.actions button {
-    background-color: #333;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
+.map-info {
+    display: flex;
+    flex-direction: column;
     padding: 10px;
-    margin-right: 10px;
-    margin-bottom: 10px;
-    cursor: pointer;
+    flex: 1;
+    position: relative;
 }
 
-.actions button:hover {
-    background-color: #555;
+.player {
+    padding: 10px;
+    display: flex;
+    height: 25%;
+    justify-content: space-around;
+    border-top: 1px solid #131313;
+}
+
+.dialogue {
+    display: flex;
+    flex-direction: column;
+    flex: 2;
+    padding: 10px;
+}
+
+.text-wrapper {
+    display: flex;
+    position: relative;
+    flex-grow: 1;
+    margin-bottom: 1rem;
+    overflow: auto;
+}
+
+.text {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    margin-top: auto;
+    overflow-y: scroll;
+}
+
+li:not(:last-child) {
+    margin-bottom: 5px;
+}
+
+.player p,
+.dialogue p {
+    margin-bottom: 10px;
 }
 
 form {
+    margin-bottom: 1rem;
+    margin-top: auto;
     display: flex;
-    margin-top: 20px;
 }
 
 label {
@@ -74,8 +97,8 @@ input[type="text"] {
 }
 
 button[type="submit"] {
-    background-color: #333;
-    color: #fff;
+    background-color: #d8d8d8;
+    color: #282828;
     border: none;
     border-radius: 5px;
     padding: 10px;
@@ -83,5 +106,90 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-    background-color: #555;
+    background-color: #a9a9a9;
+}
+
+/*Room Image Stuff*/
+/* .roomDisplay {
+    width: 100%;
+    height: 20%;
+    position: relative;
+    background-image: url("./paper.jpg");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    border: solid rgb(59, 50, 30);
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+} */
+
+/* .roomDisplay img {
+    width: 20px;
+    height: 20px;
+    display: flex;
+} */
+
+/*Map Stuff*/
+
+.map-wrapper {
+    width: 100%;
+    padding-bottom: 100%;
+    position: relative;
+    /* background-color: rgb(255, 164, 45); */
+    background-image: url("./assets/paper.jpg");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    border: solid rgb(59, 50, 30);
+    clear: both;
+}
+
+.map {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.row {
+    width: 100%;
+    height: calc(100% / 9);
+    margin: auto;
+    clear: both;
+}
+
+.map span {
+    display: block;
+    width: calc(100% / 9);
+    height: 100%;
+    float: left;
+    visibility: visible;
+}
+
+.map span p {
+    text-align: center;
+    height: 100%;
+    font-size: calc(100% / 55);
+}
+
+.map .row span.active p {
+    visibility: visible;
+}
+.map .row span.hidden p {
+    visibility: hidden;
+}
+
+.map .row span.active {
+    border: solid rgb(59, 50, 30);
+}
+.map .row span.current {
+    background-color: rgb(243, 232, 74);
+}
+.map .row span.hidden {
+    border: none;
+}
+
+/*Maybe don't need?*/
+.row::after {
+    content: "";
+    clear: both;
+    display: table;
 }
