@@ -319,6 +319,37 @@ const updateMap = (discoveredRooms, currentRoom) => {
 };
 
 
+//Updates the background of the current room
+//roomImageUrl: "bgimageurl"
+//enemyList: [["enemyimageurl", number of enemy], ["enemyimageurl", number of enemy]]
+const updateRoomImage = (roomImageUrl, enemyList) => {
+    //Update the background
+    selector = document.querySelector(".roomDisplay");
+    console.log(selector);
+    selector.style.backgroundImage = "url('" + roomImageUrl + "')";
+
+    //Update the enemies
+    if(enemyList.length > 0) {
+        //Loop through enemy list
+        for (i = 0; i < enemyList.length; i++) {
+            //Pull an enemy entry from array
+            var enemy = enemyList[i];
+            //Place the provided number of that enemy on the screen
+            for (n = 0; n < enemy[1]; n++) {
+                let img = document.createElement("img");
+                img.src = enemy[0];
+                selector.append(img);
+            }
+        }
+    } else {
+        console.log("no enemies in room");
+    }
+
+}
+
+//var enemyArr = [];
+var enemyArr = [["slime.png", 10], ["dragon.png", 1]];
+updateRoomImage("paper.jpg", enemyArr);
 
 
 
