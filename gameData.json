@@ -11,14 +11,14 @@
             "actions": [
                 {
                     "type": "move",
-                    "description": "Proceed to room 1",
-                    "destination": "room1"
+                    "description": "Proceed to next room",
+                    "destination": "Cave"
                 }
             ]
         },
-        "room1": {
-            "name": "Room1",
-            "description": "You arrived room 1. You saw a wooden stick on the ground.",
+        "Cave": {
+            "name": "Cave",
+            "description": "You arrived in a cave. You see a wooden stick on the ground.",
             "actions": [
                 {
                     "type": "collect",
@@ -32,14 +32,163 @@
                 },
                 {
                     "type": "move",
-                    "description": "Proceed to room 2",
-                    "destination": "room2"
+                    "description": "Proceed to a dark room",
+                    "destination": "Dark Room"
+                },
+				{
+                    "type": "move",
+                    "description": "Proceed to a clearing",
+                    "destination": "Cave Clearing"
                 }
             ]
         },
-        "room2": {
-            "name": "Room2",
-            "description": "You arrived room 2. There is a treasure box.",
+        "Dark Room": {
+            "name": "Dark Room",
+            "description": "You arrived in a dark room.",
+            "actions": [
+                {
+                    "type": "move",
+                    "description": "Go back to previous room",
+                    "destination": "Cave"
+                },
+				{
+                    "type": "move",
+                    "description": "Proceed further",
+                    "destination": "Cave-In Room"
+                }
+            ]
+        },
+		"Cave-In Room": {
+            "name": "Cave-In Room",
+            "description": "You arrived at a cave-in.",
+            "actions": [
+                {
+                    "type": "move",
+                    "description": "Go back to previous room",
+                    "destination": "Dark Room"
+                }
+            ]
+        },
+		"Cave Clearing": {
+            "name": "Cave Clearing",
+            "description": "You arrived at a cave clearing.",
+            "actions": [
+                {
+                    "type": "move",
+                    "description": "Go back to previous room",
+                    "destination": "Cave"
+                },
+                {
+                    "type": "move",
+                    "description": "Proceed to next room",
+                    "destination": "Catacombs"
+                }
+            ]
+        },
+		"Catacombs": {
+            "name": "Catacombs",
+            "description": "You arrived at some catacombs.",
+            "actions": [
+                {
+                    "type": "move",
+                    "description": "Go back to previous room",
+                    "destination": "Cave Clearing"
+                },
+                {
+                    "type": "move",
+                    "description": "Proceed to door room",
+                    "destination": "Door Room"
+                }
+            ]
+        },
+		"Door Room": {
+            "name": "Door Room",
+            "description": "You arrived at a door room.",
+            "actions": [
+                {
+                    "type": "move",
+                    "description": "Go back to previous room",
+                    "destination": "Catacombs"
+                },
+                {
+                    "type": "move",
+                    "description": "Proceed south",
+                    "destination": "Well"
+                },
+                {
+                    "type": "move",
+                    "description": "Proceed west",
+                    "destination": "Leaky Passage"
+                }
+            ]
+        },
+		"Leaky Passage": {
+            "name": "Leaky Passage",
+            "description": "You arrived at a leaky passage .",
+            "actions": [
+                {
+                    "type": "move",
+                    "description": "Go back to previous room",
+                    "destination": "Door Room"
+                },
+                {
+                    "type": "move",
+                    "description": "Proceed to next room",
+                    "destination": "Tomb"
+                }
+            ]
+        },
+		"Tomb": {
+            "name": "Tomb",
+            "description": "You arrived in a tomb and dead end.",
+            "actions": [
+                {
+                    "type": "move",
+                    "description": "Go back to previous room",
+                    "destination": "Leaky Passage"
+                }
+            ]
+        },
+		"Well": {
+            "name": "Well",
+            "description": "You arrived at a well.",
+            "actions": [
+                {
+                    "type": "move",
+                    "description": "Go back to previous room",
+                    "destination": "Door Room"
+                },
+                {
+                    "type": "move",
+                    "description": "Proceed south",
+                    "destination": "Boss Room"
+                },
+                {
+                    "type": "move",
+                    "description": "Proceed east",
+                    "destination": "Puzzle Door Room"
+                }
+            ]
+        },
+		"Puzzle Door Room": {
+            "name": "Puzzle Door Room",
+            "description": "You arrived in a puzzle room.",
+            "actions": [
+                {
+                    "type": "move",
+                    "description": "Go back to previous room",
+                    "destination": "Well"
+                },
+                {
+                    "type": "move",
+                    "description": "Proceed further",
+                    "destination": "Treasure Stash"
+                }
+            ]
+        },
+		"Treasure Stash": {
+            "name": "Treasure Stash",
+            "description": "You arrived room . There is a treasure box.",
             "actions": [
                 {
                     "type": "collect",
@@ -48,16 +197,27 @@
                 },
                 {
                     "type": "move",
-                    "description": "Go back to room 1",
-                    "destination": "room1"
-                },
+                    "description": "Go back to previous room",
+                    "destination": "Puzzle Door Room"
+                }
+            ]
+        },
+		"Boss Room": {
+            "name": "Boss Room",
+            "description": "You arrived in a boss room.",
+            "actions": [
                 {
                     "type": "fight",
                     "description": "Fight with the slime which is blocking your way.",
                     "enemy": "slime",
                     "attack": 2,
                     "hp": 2,
-                    "location": "Room2"
+                    "location": "Boss Room"
+                },
+                {
+                    "type": "move",
+                    "description": "Go back to previous room",
+                    "destination": "Well"
                 },
                 {
                     "type": "move",
@@ -75,9 +235,8 @@
     },
 
     "world": {
-        "solvedPuzzleRooms": [],
-        "clearedRooms": [],
-
+        "solvedPuzzleRooms": {},
+        "clearedRooms": {},
 
         "dungeonRooms": [
             ["r40", "Entrance"],

@@ -50,7 +50,16 @@ app.post("/action", (req, res) => {
             newPlayerData = player;
             newWorldData = world;
 
-            res.status(200).send({ newPlayerData, newWorldData, currentRoom });
+            battleResultMessage = `You defeated the enemy with ${numOfRounds} hits. You took ${enemyAtk} * ${enemyHp} = ${
+                enemyAtk * numOfRounds
+            } damage from the battle.`;
+
+            res.status(200).send({
+                newPlayerData,
+                newWorldData,
+                currentRoom,
+                battleResultMessage,
+            });
 
             // Handle fight action
             break;
