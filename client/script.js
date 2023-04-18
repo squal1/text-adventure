@@ -159,7 +159,6 @@ window.addEventListener("load", () => {
         .catch((error) => {
             console.error(error);
         });
-
 });
 
 // Call the API when input is submitted
@@ -254,12 +253,6 @@ document.querySelector("form").addEventListener("submit", (event) => {
     inputField.value = "";
 });
 
-
-
-
-
-
-
 //MAP FUNCTIONS
 const createMap = (dungeonRooms) => {
     //Create base grid layout
@@ -318,85 +311,36 @@ const updateMap = (discoveredRooms, currentRoom) => {
     console.log(currentRoom);
 };
 
-
 //Updates the background of the current room
 //roomImageUrl: "bgimageurl"
 //enemyList: [["enemyimageurl", number of enemy], ["enemyimageurl", number of enemy]]
-const updateRoomImage = (roomImageUrl, enemyList) => {
-    //Update the background
-    selector = document.querySelector(".roomDisplay");
-    console.log(selector);
-    selector.style.backgroundImage = "url('" + roomImageUrl + "')";
+// const updateRoomImage = (roomImageUrl, enemyList) => {
+//     //Update the background
+//     selector = document.querySelector(".roomDisplay");
+//     console.log(selector);
+//     selector.style.backgroundImage = "url('" + roomImageUrl + "')";
 
-    //Update the enemies
-    if(enemyList.length > 0) {
-        //Loop through enemy list
-        for (i = 0; i < enemyList.length; i++) {
-            //Pull an enemy entry from array
-            var enemy = enemyList[i];
-            //Place the provided number of that enemy on the screen
-            for (n = 0; n < enemy[1]; n++) {
-                let img = document.createElement("img");
-                img.src = enemy[0];
-                selector.append(img);
-            }
-        }
-    } else {
-        console.log("no enemies in room");
-    }
-
-}
+//     //Update the enemies
+//     if (enemyList.length > 0) {
+//         //Loop through enemy list
+//         for (i = 0; i < enemyList.length; i++) {
+//             //Pull an enemy entry from array
+//             var enemy = enemyList[i];
+//             //Place the provided number of that enemy on the screen
+//             for (n = 0; n < enemy[1]; n++) {
+//                 let img = document.createElement("img");
+//                 img.src = enemy[0];
+//                 selector.append(img);
+//             }
+//         }
+//     } else {
+//         console.log("no enemies in room");
+//     }
+// };
 
 //var enemyArr = [];
-var enemyArr = [["slime.png", 10], ["dragon.png", 1]];
-updateRoomImage("paper.jpg", enemyArr);
-
-
-
-
-
-
-
-/*
-//The map is a 9x9 grid. This variable stores the rooms that the player has
-//already entered in coordinate form rxy, where x and y are numbers ranging
-//from 0-8, spanning left to right and top to bottom. r40 is the starting room.
-var discoveredRooms = [
-    "r40",
-    "r41",
-    "r42",
-    "r51",
-    "r61",
-    "r43",
-    "r44",
-    "r34",
-    "r24",
-    "r45",
-    "r55",
-    "r65",
-    "r46",
-    "r47",
-];
-*/
-//The room the player currently resides in
-//var currentRoom = "r40";
-
-//Array of room name to coordinates pairs (format: [[rxy,roomName],[rxy,roomName],...] where xy is the coordinates and roomName is the name of the room)
-/*var dungeonRooms = [
-    ["r40", "Entrance"],
-    ["r41", "Cave"],
-    ["r42", "Dark Room"],
-    ["r51", "Cave-In Room"],
-    ["r61", "Cave Clearing"],
-    ["r43", "Door Room"],
-    ["r24", "Tomb"],
-    ["r34", "Catacombs"],
-    ["r44", "Well"],
-    ["r45", "Leaky Passage"],
-    ["r55", "Puzzle Door Room"],
-    ["r65", "Treasure Stash"],
-    ["r46", "Boss Room"],
-    ["r47", "Exit"],
-];
-*/
-// updateMap(discoveredRooms, currentRoom);
+// var enemyArr = [
+//     ["slime.png", 10],
+//     ["dragon.png", 1],
+// ];
+// updateRoomImage("paper.jpg", enemyArr);
