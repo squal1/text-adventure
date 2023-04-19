@@ -59,6 +59,7 @@ const displayCurrentRoom = async (roomName, description, actions) => {
     let i = 0;
     while (i < actions.length) {
         const action = actions[i];
+        console.log(action);
         // Check if the action is a "collect" action and if the item has already been collected, remove it from the array.
         if (action.type == "collect" && action.item in player.items) {
             actions.splice(i, 1);
@@ -74,6 +75,9 @@ const displayCurrentRoom = async (roomName, description, actions) => {
             action.hasOwnProperty("showIfCleared") &&
             !(currentRoom.name in world.clearedRooms)
         ) {
+            console.log(currentRoom.name);
+            console.log(world.clearedRooms);
+            console.log(action);
             actions.splice(i, 1);
             continue;
         }
@@ -134,6 +138,7 @@ window.addEventListener("load", () => {
             rooms = response.data.rooms;
             world = response.data.world;
             currentRoom = response.data.currentRoom;
+            discoveredRooms = response.data.discoveredRooms;
             actions = currentRoom.actions;
 
             updatePlayer(player);
@@ -152,9 +157,7 @@ window.addEventListener("load", () => {
             //Map
             //console.log(world.dungeonRooms);
             createMap(world.dungeonRooms);
-            console.log(world.discoveredRooms);
-            console.log(world.currentRoom);
-            updateMap(world.discoveredRooms, world.currentRoom);
+            updateMap(discoveredRooms, currentRoom.mapCode);
         })
         .catch((error) => {
             console.error(error);
@@ -190,37 +193,21 @@ document.querySelector("form").addEventListener("submit", (event) => {
         .then((response) => {
             switch (action.type) {
                 case "move": {
-                    // Server sending back a room object representing the new room
-                    currentRoom = response.data;
+                    // Server sending back a room object and the new list of discovered rooms
+                    currentRoom = response.data.currentRoom;
+                    discoveredRooms = response.data.discoveredRooms;
+
                     actions = currentRoom.actions;
                     mapCode = currentRoom.mapCode;
 
-                    console.log(mapCode);
-
+                    //Update map to show current room
+                    updateMap(discoveredRooms, mapCode);
                     // Write new text to browser
                     displayCurrentRoom(
                         currentRoom.name,
                         currentRoom.description,
                         actions
                     );
-
-                    //TEMPORARY (NEED TO UPDATE DISCOVERED ROOMS ARRAY)
-                    discoveredRooms = [            "r40",
-                    "r41",
-                    "r42",
-                    "r52",
-                    "r62",
-                    "r43",
-                    "r44",
-                    "r34",
-                    "r24",
-                    "r45",
-                    "r55",
-                    "r65",
-                    "r46",
-                    "r47"];
-                    //Update map to show current room
-                    updateMap(discoveredRooms, mapCode);
                     break;
                 }
                 case "collect": {
@@ -252,6 +239,7 @@ document.querySelector("form").addEventListener("submit", (event) => {
 
                     updatePlayer(player);
 
+                    console.log(newWorldData);
                     displayCurrentRoom(
                         currentRoom.name,
                         currentRoom.description,
@@ -330,8 +318,8 @@ const updateMap = (discoveredRooms, currentRoom) => {
     //Mark current room on map
     curRoom = document.querySelector("." + currentRoom);
     curRoom.classList.add("current");
-    console.log("currentRoom:");
-    console.log(currentRoom);
+    // console.log("currentRoom:");
+    // console.log(currentRoom);
 };
 
 //Updates the background of the current room
@@ -367,10 +355,6 @@ const updateMap = (discoveredRooms, currentRoom) => {
 //     ["dragon.png", 1],
 // ];
 // updateRoomImage("paper.jpg", enemyArr);
-
-
-
-
 
 //BUG LIST:
 //On page reload, map highlights the entrance
