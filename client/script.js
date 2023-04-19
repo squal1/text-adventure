@@ -193,6 +193,9 @@ document.querySelector("form").addEventListener("submit", (event) => {
                     // Server sending back a room object representing the new room
                     currentRoom = response.data;
                     actions = currentRoom.actions;
+                    mapCode = currentRoom.mapCode;
+
+                    console.log(mapCode);
 
                     // Write new text to browser
                     displayCurrentRoom(
@@ -200,6 +203,24 @@ document.querySelector("form").addEventListener("submit", (event) => {
                         currentRoom.description,
                         actions
                     );
+
+                    //TEMPORARY (NEED TO UPDATE DISCOVERED ROOMS ARRAY)
+                    discoveredRooms = [            "r40",
+                    "r41",
+                    "r42",
+                    "r52",
+                    "r62",
+                    "r43",
+                    "r44",
+                    "r34",
+                    "r24",
+                    "r45",
+                    "r55",
+                    "r65",
+                    "r46",
+                    "r47"];
+                    //Update map to show current room
+                    updateMap(discoveredRooms, mapCode);
                     break;
                 }
                 case "collect": {
@@ -290,9 +311,10 @@ const updateMap = (discoveredRooms, currentRoom) => {
     //Make all rooms invisible
     var spans = document.querySelectorAll(".map .row span");
     console.log(spans);
+    //Test
     // for (span in spans) {
-    //     span.classList.add("hidden");
-    // }
+    //    span.classList.add("hidden");
+    //}
     [].forEach.call(spans, (el) => {
         // except for the element clicked, remove active class
         el.classList.add("hidden");
@@ -302,6 +324,7 @@ const updateMap = (discoveredRooms, currentRoom) => {
         room = document.querySelector("." + discoveredRooms[i]);
         room.classList.remove("hidden");
         room.classList.add("active");
+        room.classList.remove("current");
     }
 
     //Mark current room on map
@@ -344,3 +367,10 @@ const updateMap = (discoveredRooms, currentRoom) => {
 //     ["dragon.png", 1],
 // ];
 // updateRoomImage("paper.jpg", enemyArr);
+
+
+
+
+
+//BUG LIST:
+//On page reload, map highlights the entrance

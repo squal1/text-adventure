@@ -7,18 +7,24 @@
     "rooms": {
         "entrance": {
             "name": "Entrance",
-            "description": "This is an entrance",
+            "description": "Breaking through the cover of trees, the mouth of a cave beckons. Twigs litter the forest floor.",
             "actions": [
+                {
+                    "type": "collect",
+                    "description": "Pick up a stick.",
+                    "item": "stick"
+                },
                 {
                     "type": "move",
                     "description": "Proceed to next room",
                     "destination": "Cave"
                 }
-            ]
+            ],
+            "mapCode": "r40"
         },
         "Cave": {
             "name": "Cave",
-            "description": "You arrived in a cave. You see a wooden stick on the ground.",
+            "description": "You arrived in a cave. A bonfire flickers gently.",
             "actions": [
                 {
                     "type": "collect",
@@ -34,17 +40,13 @@
                     "type": "move",
                     "description": "Proceed to a dark room",
                     "destination": "Dark Room"
-                },
-				{
-                    "type": "move",
-                    "description": "Proceed to a clearing",
-                    "destination": "Cave Clearing"
                 }
-            ]
+            ],
+            "mapCode": "r41"
         },
         "Dark Room": {
             "name": "Dark Room",
-            "description": "You arrived in a dark room.",
+            "description": "You arrived in a dark room. The light of your torch reflects off the damp walls.",
             "actions": [
                 {
                     "type": "move",
@@ -53,10 +55,16 @@
                 },
 				{
                     "type": "move",
-                    "description": "Proceed further",
+                    "description": "Travel off the path",
                     "destination": "Cave-In Room"
+                },
+                {
+                    "type": "move",
+                    "description": "Proceed to next room",
+                    "destination": "Door Room"
                 }
-            ]
+            ],
+            "mapCode": "r42"
         },
 		"Cave-In Room": {
             "name": "Cave-In Room",
@@ -66,8 +74,14 @@
                     "type": "move",
                     "description": "Go back to previous room",
                     "destination": "Dark Room"
+                },
+                {
+                    "type": "move",
+                    "description": "Proceed to a clearing",
+                    "destination": "Cave Clearing"
                 }
-            ]
+            ],
+            "mapCode": "r52"
         },
 		"Cave Clearing": {
             "name": "Cave Clearing",
@@ -76,14 +90,10 @@
                 {
                     "type": "move",
                     "description": "Go back to previous room",
-                    "destination": "Cave"
-                },
-                {
-                    "type": "move",
-                    "description": "Proceed to next room",
-                    "destination": "Catacombs"
+                    "destination": "Cave-In Room"
                 }
-            ]
+            ],
+            "mapCode": "r62"
         },
 		"Catacombs": {
             "name": "Catacombs",
@@ -92,14 +102,15 @@
                 {
                     "type": "move",
                     "description": "Go back to previous room",
-                    "destination": "Cave Clearing"
+                    "destination": "Well"
                 },
                 {
                     "type": "move",
-                    "description": "Proceed to door room",
-                    "destination": "Door Room"
+                    "description": "Proceed to the tomb",
+                    "destination": "Tomb"
                 }
-            ]
+            ],
+            "mapCode": "r34"
         },
 		"Door Room": {
             "name": "Door Room",
@@ -108,19 +119,15 @@
                 {
                     "type": "move",
                     "description": "Go back to previous room",
-                    "destination": "Catacombs"
+                    "destination": "Dark Room"
                 },
                 {
                     "type": "move",
                     "description": "Proceed south",
                     "destination": "Well"
-                },
-                {
-                    "type": "move",
-                    "description": "Proceed west",
-                    "destination": "Leaky Passage"
                 }
-            ]
+            ],
+            "mapCode": "r43"
         },
 		"Leaky Passage": {
             "name": "Leaky Passage",
@@ -128,15 +135,21 @@
             "actions": [
                 {
                     "type": "move",
-                    "description": "Go back to previous room",
-                    "destination": "Door Room"
+                    "description": "Climb back up the well",
+                    "destination": "Well"
                 },
                 {
                     "type": "move",
                     "description": "Proceed to next room",
-                    "destination": "Tomb"
+                    "destination": "Boss Room"
+                },
+                {
+                    "type": "move",
+                    "description": "Go west",
+                    "destination": "Puzzle Door Room"
                 }
-            ]
+            ],
+            "mapCode": "r45"
         },
 		"Tomb": {
             "name": "Tomb",
@@ -145,9 +158,10 @@
                 {
                     "type": "move",
                     "description": "Go back to previous room",
-                    "destination": "Leaky Passage"
+                    "destination": "Catacombs"
                 }
-            ]
+            ],
+            "mapCode": "r24"
         },
 		"Well": {
             "name": "Well",
@@ -160,15 +174,16 @@
                 },
                 {
                     "type": "move",
-                    "description": "Proceed south",
-                    "destination": "Boss Room"
+                    "description": "Jump down the well",
+                    "destination": "Leaky Passage"
                 },
                 {
                     "type": "move",
                     "description": "Proceed east",
-                    "destination": "Puzzle Door Room"
+                    "destination": "Catacombs"
                 }
-            ]
+            ],
+            "mapCode": "r44"
         },
 		"Puzzle Door Room": {
             "name": "Puzzle Door Room",
@@ -177,14 +192,15 @@
                 {
                     "type": "move",
                     "description": "Go back to previous room",
-                    "destination": "Well"
+                    "destination": "Leaky Passage"
                 },
                 {
                     "type": "move",
                     "description": "Proceed further",
                     "destination": "Treasure Stash"
                 }
-            ]
+            ],
+            "mapCode": "r55"
         },
 		"Treasure Stash": {
             "name": "Treasure Stash",
@@ -200,7 +216,8 @@
                     "description": "Go back to previous room",
                     "destination": "Puzzle Door Room"
                 }
-            ]
+            ],
+            "mapCode": "r65"
         },
 		"Boss Room": {
             "name": "Boss Room",
@@ -217,7 +234,7 @@
                 {
                     "type": "move",
                     "description": "Go back to previous room",
-                    "destination": "Well"
+                    "destination": "Leaky Passage"
                 },
                 {
                     "type": "move",
@@ -225,12 +242,14 @@
                     "destination": "exit",
                     "showIfCleared": true
                 }
-            ]
+            ],
+            "mapCode": "r46"
         },
         "exit": {
             "name": "Exit",
             "description": "You made it to the exit",
-            "actions": []
+            "actions": [],
+            "mapCode": "r47"
         }
     },
 
@@ -242,8 +261,8 @@
             ["r40", "Entrance"],
             ["r41", "Cave"],
             ["r42", "Dark Room"],
-            ["r51", "Cave-In Room"],
-            ["r61", "Cave Clearing"],
+            ["r52", "Cave-In Room"],
+            ["r62", "Cave Clearing"],
             ["r43", "Door Room"],
             ["r24", "Tomb"],
             ["r34", "Catacombs"],
@@ -259,8 +278,8 @@
             "r40",
             "r41",
             "r42",
-            "r51",
-            "r61",
+            "r52",
+            "r62",
             "r43",
             "r44",
             "r34",
