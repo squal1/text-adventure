@@ -30,6 +30,14 @@ app.get("/init", (req, res) => {
 app.post("/action", (req, res) => {
     const action = req.body.action;
 
+	function calculateDamage() {
+		return Math.floor((Math.random() * (2 - 0.5) + 0.5) * 100) / 100; // Generates a random number between 0.5 and 2 to 2 decimal places
+	}
+	
+	function calculateHits() {
+		return Math.floor(Math.random() * (3 - 1) + 2); // Generates a random number between 1 and 3
+	}
+
     // Handle the action object
     switch (action.type) {
         case "move":
@@ -50,16 +58,18 @@ app.post("/action", (req, res) => {
             res.status(200).send({ newPlayerData, newItem });
             break;
         case "fight":
-            enemyHp = action.hp;
-            enemyAtk = action.attack;
+            enemyHp = calculateHits();//action.hp; //old code
+            enemyAtk = calculateDamage();//action.attack; //old code
             playerHp = player.stats.hp;
             playerAtk = player.stats.attack;
 
             numOfRounds = Math.floor(enemyHp / playerAtk);
             playerHp -= enemyAtk * numOfRounds;
+			playerAtk += enemyHp;
 
             // Update player hp
             player.stats.hp = playerHp;
+			player.stats.attack = playerAtk;
             // Update world
             world.clearedRooms[action.location] = true;
             console.log(world.clearedRooms);
