@@ -63,6 +63,45 @@ app.post("/action", (req, res) => {
 
             // Handle fight action
             break;
+        case "use":
+            usedItem = action.consume;
+            gainedItem = action.gain;
+
+            // Update player items on server
+            const itemIndex = player.items.indexOf(usedItem);
+            if (itemIndex > -1) {
+                player.items.splice(itemIndex, 1);
+                console.log("item used");
+            }
+            if (action.gain === "") {
+                print("No item gained from use");
+            } else {
+                player.items[gainedItem] = true;
+            }
+
+            console.log(player.items);
+
+            //If the used item used results in a room being solved, add that room to solvedPuzzleRooms
+            if (action.solved === true) {
+                world.solvedPuzzleRooms[action.location] = true;
+                console.log("Room solved!");
+            }
+
+            newPlayerData = player;
+            newWorldData = world;
+            itemResultMessage = action.resultText;
+
+            console.log(newPlayerData);
+            console.log(newWorldData);
+
+            res.status(200).send({
+                newPlayerData,
+                newWorldData,
+                currentRoom,
+                itemResultMessage,
+            });
+            //Handle use action
+            break;
         default:
             // Handle invalid action
             res.send(400, "Invalid action type");

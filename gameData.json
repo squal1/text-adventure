@@ -24,7 +24,7 @@
         },
         "Cave": {
             "name": "Cave",
-            "description": "You arrived in a cave. A bonfire flickers gently.",
+            "description": "You arrived in a cave. A bonfire flickers gently. The room ahead is too dark to advance safely.",
             "actions": [
                 {
                     "type": "collect",
@@ -39,7 +39,19 @@
                 {
                     "type": "move",
                     "description": "Proceed to a dark room",
-                    "destination": "Dark Room"
+                    "destination": "Dark Room",
+                    "showIfSolved": true
+                },
+                {
+                    "type": "use",
+                    "description": "Light the stick with the bonfire",
+                    "needItem": true,
+                    "consume": "stick",
+                    "gain": "torch",
+                    "solved": true,
+                    "location": "Cave",
+                    "resultText": "The stick caught fire, creating a torch. Obtained the torch!"
+                    
                 }
             ],
             "mapCode": "r41"
@@ -85,7 +97,7 @@
         },
 		"Cave Clearing": {
             "name": "Cave Clearing",
-            "description": "You arrived at a cave clearing.",
+            "description": "You arrived at a cave clearing. There is a stone tablet inscription that reads: '3214'",
             "actions": [
                 {
                     "type": "move",

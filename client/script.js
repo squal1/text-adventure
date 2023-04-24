@@ -77,6 +77,22 @@ const displayCurrentRoom = async (roomName, description, actions) => {
             actions.splice(i, 1);
             continue;
         }
+        // Check if the move action has showIfSolved attribute, hide if room is not in world.solvedPuzzleRooms
+        if (
+            action.hasOwnProperty("showIfSolved") &&
+            !(currentRoom.name in world.solvedPuzzleRooms)
+        ) {
+            actions.splice(i, 1);
+            continue;
+        }
+        //Check if the use action has the consume attribute, hide if the item is not in the player's inventory
+        if (
+            action.hasOwnProperty("needItem") &&
+            !(action.consume in player.items)
+        ) {
+            actions.splice(i, 1);
+            continue;
+        }
         // Write action into action list
         let li = document.createElement("li");
 
@@ -110,10 +126,35 @@ const updateItems = async (newItem) => {
     p.classList.add(`item${numChildElements}`);
     parent.append(p);
     await typeWriter(
-        `${numChildElements}. ${newItem}`,
+        /*`${numChildElements}. */`${newItem}`,
         `item${numChildElements}`
     );
 };
+
+//Delete an item from inventory when it is used. Return the new items array.
+const useItem = async (usedItem) => {
+    const parent = $(".items")
+    var consumed = 0;
+    var items = Array.from(parent.children);
+    var newItems = [];
+    var counter = 0;
+    console.log(items);
+    //Create new array without the consumed item
+    for (let i = 0; i < items.length; i++) {
+        if (items === usedItem && consumed === 0) {
+            print("Item used: " + items[i]);
+            consumed++;
+        } else {
+            newItems[counter] = items[i];
+            counter++;
+        }
+    }
+    console.log(newItems);
+    parent.empty();
+    //for (element in newItems) {
+      //  updateItems(element);
+    //}
+}
 
 const updatePlayer = async (player) => {
     // Clear old text
@@ -247,7 +288,7 @@ document.querySelector("form").addEventListener("submit", (event) => {
                     player = newPlayerData;
                     world = newWorldData;
 
-                    // Refresh action lsit
+                    // Refresh action list
                     actions = currentRoom.actions;
 
                     updatePlayer(player);
@@ -259,6 +300,30 @@ document.querySelector("form").addEventListener("submit", (event) => {
                     );
 
                     printText(battleResultMessage);
+                    break;
+                }
+                case "use": {
+                    let {
+                        newPlayerData,
+                        newWorldData,
+                        currentRoom,
+                        itemResultMessage,
+                    } = response.data
+                    // Update player and world data
+                    player = newPlayerData;
+                    world = newWorldData;
+
+                    useItem(world.consume);
+
+                    //Refresh action list
+                    actions = currentRoom.actions;
+
+                    displayCurrentRoom(
+                        currentRoom.name,
+                        currentRoom.description,
+                        actions
+                    );
+                    printText(itemResultMessage);
                     break;
                 }
                 default:
