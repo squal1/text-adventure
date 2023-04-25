@@ -60,7 +60,10 @@ const displayCurrentRoom = async (roomName, description, actions) => {
     while (i < actions.length) {
         const action = actions[i];
         // Check if the action is a "collect" action and if all items in the room have been collected, remove it from the array.
-        if (action.type == "collect" && world.collectedItems[action.location] >= action.quantity) {
+        if (
+            action.type == "collect" &&
+            world.collectedItems[action.location] >= action.quantity
+        ) {
             actions.splice(i, 1);
             continue;
         }
@@ -90,9 +93,9 @@ const displayCurrentRoom = async (roomName, description, actions) => {
         }
         //Check if the use action has the consume attribute, hide if the item is not in the player's inventory
         if (
-            action.hasOwnProperty("needItem") && player.items[action.consume] == 0) {
-            console.log(action.consume)
-            console.log(player.items[action.consume])
+            action.hasOwnProperty("needItem") &&
+            player.items[action.consume] == 0
+        ) {
             actions.splice(i, 1);
             continue;
         }
@@ -129,11 +132,10 @@ const updateItems = async (newItem, quantity) => {
     p.classList.add(`item${numChildElements}`);
     parent.append(p);
     await typeWriter(
-        /*`${numChildElements}. */`${newItem + " (" + quantity + ")"}`,
+        `${newItem + " (" + quantity + ")"}`,
         `item${numChildElements}`
     );
 };
-
 
 const updatePlayer = async (player) => {
     // Clear old text
@@ -227,12 +229,13 @@ document.querySelector("form").addEventListener("submit", (event) => {
                     displayCurrentRoom(
                         currentRoom.name,
                         currentRoom.description,
-                        actions,
+                        actions
                     );
                     break;
                 }
                 case "collect": {
-                    let { newPlayerData, newItem, newWorldData, currentRoom } = response.data;
+                    let { newPlayerData, newItem, newWorldData, currentRoom } =
+                        response.data;
                     // Update player data
                     player = newPlayerData;
                     world = newWorldData;
@@ -242,13 +245,13 @@ document.querySelector("form").addEventListener("submit", (event) => {
 
                     for (item in player.items) {
                         if (player.items[item] > 0) {
-                            updateItems(item, player.items[item])
+                            updateItems(item, player.items[item]);
                         }
                     }
 
                     //Refresh action list
-                    actions = currentRoom.actions
-                    
+                    actions = currentRoom.actions;
+
                     displayCurrentRoom(
                         currentRoom.name,
                         currentRoom.description,
@@ -288,7 +291,7 @@ document.querySelector("form").addEventListener("submit", (event) => {
                         newWorldData,
                         currentRoom,
                         itemResultMessage,
-                    } = response.data
+                    } = response.data;
                     // Update player and world data
                     player = newPlayerData;
                     world = newWorldData;
@@ -298,9 +301,9 @@ document.querySelector("form").addEventListener("submit", (event) => {
 
                     for (item in player.items) {
                         if (player.items[item] > 0) {
-                            updateItems(item, player.items[item])
+                            updateItems(item, player.items[item]);
                         }
-                    }                    
+                    }
 
                     //Refresh action list
                     actions = currentRoom.actions;
@@ -362,15 +365,12 @@ const createMap = (dungeonRooms) => {
 const updateMap = (discoveredRooms, currentRoom) => {
     //Make all rooms invisible
     var spans = document.querySelectorAll(".map .row span");
-    console.log(spans);
-    //Test
-    // for (span in spans) {
-    //    span.classList.add("hidden");
-    //}
+
     [].forEach.call(spans, (el) => {
         // except for the element clicked, remove active class
         el.classList.add("hidden");
     });
+
     //Make all discovered rooms visible
     for (var i = 0; i < discoveredRooms.length; i++) {
         room = document.querySelector("." + discoveredRooms[i]);
@@ -382,8 +382,6 @@ const updateMap = (discoveredRooms, currentRoom) => {
     //Mark current room on map
     curRoom = document.querySelector("." + currentRoom);
     curRoom.classList.add("current");
-    // console.log("currentRoom:");
-    // console.log(currentRoom);
 };
 
 //Updates the background of the current room
