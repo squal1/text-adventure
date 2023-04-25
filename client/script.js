@@ -131,31 +131,6 @@ const updateItems = async (newItem, quantity) => {
     );
 };
 
-//??????
-//Delete an item from inventory when it is used. Return the new items array.
-const useItem = async (usedItem) => {
-    const parent = $(".items .list")
-    var consumed = 0;
-    var items = Array.from(parent.children);
-    var newItems = [];
-    var counter = 0;
-    console.log(items);
-    //Create new array without the consumed item
-    for (let i = 0; i < items.length; i++) {
-        if (items === usedItem && consumed === 0) {
-            print("Item used: " + items[i]);
-            consumed++;
-        } else {
-            newItems[counter] = items[i];
-            counter++;
-        }
-    }
-    console.log(newItems);
-    parent.empty();
-    //for (element in newItems) {
-      //  updateItems(element);
-    //}
-}
 
 const updatePlayer = async (player) => {
     // Clear old text
@@ -192,7 +167,7 @@ window.addEventListener("load", () => {
 
             for (item in player.items) {
                 if (player.items[item] > 0) {
-                    updateItems(item);
+                    updateItems(item, player.items[item]);
                 }
             }
 
