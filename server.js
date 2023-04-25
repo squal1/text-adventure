@@ -28,10 +28,18 @@ app.post("/action", (req, res) => {
         case "collect":
             // Handle update action -> Send back the player data and item data
             newItem = action.item;
-            player.items[newItem] = true;
+            //If the number of items that the player has obtained from the room doesn't exceed the quantity in the room, increment by 1
+            //console.log(world.collectedItems[action.location]);
+            //console.log(action.quantity);
+            if (world.collectedItems[action.location] < action.quantity) {
+                player.items[newItem]++;
+                world.collectedItems[action.location]++;
+                console.log("item added");
+            }
             newPlayerData = player;
-            // console.log(newPlayerData);
-            res.status(200).send({ newPlayerData, newItem });
+            newWorldData = world;
+            //console.log(newPlayerData);
+            res.status(200).send({ newPlayerData, newItem, newWorldData });
             break;
         case "fight":
             enemyHp = action.hp;
@@ -68,15 +76,14 @@ app.post("/action", (req, res) => {
             gainedItem = action.gain;
 
             // Update player items on server
-            const itemIndex = player.items.indexOf(usedItem);
-            if (itemIndex > -1) {
-                player.items.splice(itemIndex, 1);
+            if (player.items[usedItem] > 0) {
+                player.items[usedItem]--;
                 console.log("item used");
             }
-            if (action.gain === "") {
+            if (gainedItem === "") {
                 print("No item gained from use");
             } else {
-                player.items[gainedItem] = true;
+                player.items[gainedItem]++;
             }
 
             console.log(player.items);

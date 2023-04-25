@@ -59,8 +59,8 @@ const displayCurrentRoom = async (roomName, description, actions) => {
     let i = 0;
     while (i < actions.length) {
         const action = actions[i];
-        // Check if the action is a "collect" action and if the item has already been collected, remove it from the array.
-        if (action.type == "collect" && action.item in player.items) {
+        // Check if the action is a "collect" action and if all items in the room have been collected, remove it from the array.
+        if (action.type == "collect" && world.collectedItems[action.location] >= action.quantity) {
             actions.splice(i, 1);
             continue;
         }
@@ -87,9 +87,9 @@ const displayCurrentRoom = async (roomName, description, actions) => {
         }
         //Check if the use action has the consume attribute, hide if the item is not in the player's inventory
         if (
-            action.hasOwnProperty("needItem") &&
-            !(action.consume in player.items)
-        ) {
+            action.hasOwnProperty("needItem") && player.items[action.consume] == 0) {
+            console.log(action.consume)
+            console.log(player.items[action.consume])
             actions.splice(i, 1);
             continue;
         }
@@ -115,10 +115,10 @@ const displayCurrentRoom = async (roomName, description, actions) => {
 };
 
 // Update item list on display
-const updateItems = async (newItem) => {
+const updateItems = async (newItem, quantity) => {
     let p = document.createElement("p");
 
-    const parent = document.querySelector(`.items`);
+    const parent = document.querySelector(`.items .list`);
 
     const childElements = Array.from(parent.children);
     const numChildElements = childElements.length;
@@ -126,14 +126,15 @@ const updateItems = async (newItem) => {
     p.classList.add(`item${numChildElements}`);
     parent.append(p);
     await typeWriter(
-        /*`${numChildElements}. */`${newItem}`,
+        /*`${numChildElements}. */`${newItem + " (" + quantity + ")"}`,
         `item${numChildElements}`
     );
 };
 
+//??????
 //Delete an item from inventory when it is used. Return the new items array.
 const useItem = async (usedItem) => {
-    const parent = $(".items")
+    const parent = $(".items .list")
     var consumed = 0;
     var items = Array.from(parent.children);
     var newItems = [];
@@ -186,8 +187,13 @@ window.addEventListener("load", () => {
                 actions
             );
 
+            //Clear item box, and update with items the player posesses
+            $(".items .list").empty();
+
             for (item in player.items) {
-                updateItems(item);
+                if (player.items[item] > 0) {
+                    updateItems(item);
+                }
             }
 
             //Map
@@ -242,7 +248,7 @@ document.querySelector("form").addEventListener("submit", (event) => {
                     displayCurrentRoom(
                         currentRoom.name,
                         currentRoom.description,
-                        actions
+                        actions,
                     );
 
                     //TEMPORARY (NEED TO UPDATE DISCOVERED ROOMS ARRAY)
@@ -265,11 +271,20 @@ document.querySelector("form").addEventListener("submit", (event) => {
                     break;
                 }
                 case "collect": {
-                    let { newPlayerData, newItem } = response.data;
+                    let { newPlayerData, newItem, newWorldData } = response.data;
                     // Update player data
                     player = newPlayerData;
+                    world = newWorldData;
 
-                    updateItems(newItem);
+                    //Clear item box, and update with items the player posesses
+                    $(".items .list").empty();
+
+                    for (item in player.items) {
+                        if (player.items[item] > 0) {
+                            updateItems(item, player.items[item])
+                        }
+                    }
+                    
                     displayCurrentRoom(
                         currentRoom.name,
                         currentRoom.description,
@@ -313,7 +328,14 @@ document.querySelector("form").addEventListener("submit", (event) => {
                     player = newPlayerData;
                     world = newWorldData;
 
-                    useItem(world.consume);
+                    //Clear item box, and update with items the player posesses
+                    $(".items .list").empty();
+
+                    for (item in player.items) {
+                        if (player.items[item] > 0) {
+                            updateItems(item, player.items[item])
+                        }
+                    }                    
 
                     //Refresh action list
                     actions = currentRoom.actions;

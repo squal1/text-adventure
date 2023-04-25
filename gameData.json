@@ -1,18 +1,20 @@
 {
     "player": {
         "stats": { "hp": 10, "attack": 1 },
-        "items": {}
+        "items": {"stick": 0, "potion": 0, "rope": 0, "torch": 0, "pebble": 0}
     },
 
     "rooms": {
-        "entrance": {
+        "Entrance": {
             "name": "Entrance",
             "description": "Breaking through the cover of trees, the mouth of a cave beckons. Twigs litter the forest floor.",
             "actions": [
                 {
                     "type": "collect",
                     "description": "Pick up a stick.",
-                    "item": "stick"
+                    "item": "stick",
+                    "quantity": 1,
+                    "location": "Entrance"
                 },
                 {
                     "type": "move",
@@ -28,13 +30,15 @@
             "actions": [
                 {
                     "type": "collect",
-                    "description": "Pick up the stick.",
-                    "item": "stick"
+                    "description": "Pick up a stick.",
+                    "item": "stick",
+                    "quantity": 2,
+                    "location": "Cave"
                 },
                 {
                     "type": "move",
                     "description": "Go back to entrance",
-                    "destination": "entrance"
+                    "destination": "Entrance"
                 },
                 {
                     "type": "move",
@@ -221,7 +225,8 @@
                 {
                     "type": "collect",
                     "description": "Loot the treasure.",
-                    "item": "treasure"
+                    "item": "treasure",
+                    "quantity": 1
                 },
                 {
                     "type": "move",
@@ -303,6 +308,26 @@
             "r47"
         ],
 
-        "currentRoom": "r40"
+        "currentRoom": "r40",
+
+        "collectedItems": {
+            "Entrance": 0,
+            "Cave": 0,
+            "Dark Room": 0,
+            "Cave-In Room": 0,
+            "Cave Clearing": 0,
+            "Door Room": 0,
+            "Tomb": 0,
+            "Catacombs": 0,
+            "Well": 0,
+            "Leaky Passage": 0,
+            "Puzzle Door Room": 0,
+            "Treasure Stash": 0,
+            "Boss Room": 0,
+            "Exit": 0
+        }
+
+        
+
     }
 }
