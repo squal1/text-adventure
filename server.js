@@ -38,8 +38,9 @@ app.post("/action", (req, res) => {
             }
             newPlayerData = player;
             newWorldData = world;
+            currentRoom = rooms[action.location];
             //console.log(newPlayerData);
-            res.status(200).send({ newPlayerData, newItem, newWorldData });
+            res.status(200).send({ newPlayerData, newItem, newWorldData, currentRoom });
             break;
         case "fight":
             enemyHp = action.hp;

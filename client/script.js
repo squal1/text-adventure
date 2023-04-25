@@ -246,7 +246,7 @@ document.querySelector("form").addEventListener("submit", (event) => {
                     break;
                 }
                 case "collect": {
-                    let { newPlayerData, newItem, newWorldData } = response.data;
+                    let { newPlayerData, newItem, newWorldData, currentRoom } = response.data;
                     // Update player data
                     player = newPlayerData;
                     world = newWorldData;
@@ -259,6 +259,9 @@ document.querySelector("form").addEventListener("submit", (event) => {
                             updateItems(item, player.items[item])
                         }
                     }
+
+                    //Refresh action list
+                    actions = currentRoom.actions
                     
                     displayCurrentRoom(
                         currentRoom.name,
