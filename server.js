@@ -1,5 +1,11 @@
 const express = require("express");
-var { player, rooms, world, currentRoom } = require("./gameDataManager");
+var {
+    player,
+    rooms,
+    world,
+    currentRoom,
+    discoveredRooms,
+} = require("./gameDataManager");
 
 const app = express();
 const port = 8000;
@@ -12,7 +18,13 @@ app.get("/init", (req, res) => {
         res.status(500).send("Game data not found");
         return;
     }
-    res.status(200).send({ player, rooms, world, currentRoom });
+    res.status(200).send({
+        player,
+        rooms,
+        world,
+        currentRoom,
+        discoveredRooms,
+    });
 });
 
 app.post("/action", (req, res) => {
@@ -23,7 +35,11 @@ app.post("/action", (req, res) => {
         case "move":
             // Move to the destination
             currentRoom = rooms[action.destination];
-            res.status(200).send(currentRoom);
+            // Update discovered rooms
+            if (!discoveredRooms.includes(currentRoom.mapCode)) {
+                discoveredRooms.push(currentRoom.mapCode);
+            }
+            res.status(200).send({ currentRoom, discoveredRooms });
             break;
         case "collect":
             // Handle update action -> Send back the player data and item data
@@ -55,6 +71,7 @@ app.post("/action", (req, res) => {
             player.stats.hp = playerHp;
             // Update world
             world.clearedRooms[action.location] = true;
+            console.log(world.clearedRooms);
 
             newPlayerData = player;
             newWorldData = world;
@@ -120,9 +137,6 @@ app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
 });
 
-
-
-
 //WHAT TO PUSH TO DATABASE (Save data)
 //Player Stats (stats, items)
 //Cleared Conditions (puzzles, enemies)
@@ -132,4 +146,4 @@ app.listen(port, () => {
 //IDEAS
 //Keep json file, push crucial save data to server
 //Update game with json file, but push data when the user saves
-//When the user loads, 
+//When the user loads,

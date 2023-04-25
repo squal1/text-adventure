@@ -69,7 +69,7 @@
                     "description": "Go back to previous room",
                     "destination": "Cave"
                 },
-				{
+                {
                     "type": "move",
                     "description": "Travel off the path",
                     "destination": "Cave-In Room"
@@ -82,7 +82,7 @@
             ],
             "mapCode": "r42"
         },
-		"Cave-In Room": {
+        "Cave-In Room": {
             "name": "Cave-In Room",
             "description": "You arrived at a cave-in.",
             "actions": [
@@ -99,7 +99,7 @@
             ],
             "mapCode": "r52"
         },
-		"Cave Clearing": {
+        "Cave Clearing": {
             "name": "Cave Clearing",
             "description": "You arrived at a cave clearing. There is a stone tablet inscription that reads: '3214'",
             "actions": [
@@ -111,7 +111,7 @@
             ],
             "mapCode": "r62"
         },
-		"Catacombs": {
+        "Catacombs": {
             "name": "Catacombs",
             "description": "You arrived at some catacombs.",
             "actions": [
@@ -128,7 +128,7 @@
             ],
             "mapCode": "r34"
         },
-		"Door Room": {
+        "Door Room": {
             "name": "Door Room",
             "description": "You arrived at a door room.",
             "actions": [
@@ -145,7 +145,7 @@
             ],
             "mapCode": "r43"
         },
-		"Leaky Passage": {
+        "Leaky Passage": {
             "name": "Leaky Passage",
             "description": "You arrived at a leaky passage .",
             "actions": [
@@ -167,7 +167,7 @@
             ],
             "mapCode": "r45"
         },
-		"Tomb": {
+        "Tomb": {
             "name": "Tomb",
             "description": "You arrived in a tomb and dead end.",
             "actions": [
@@ -179,7 +179,7 @@
             ],
             "mapCode": "r24"
         },
-		"Well": {
+        "Well": {
             "name": "Well",
             "description": "You arrived at a well.",
             "actions": [
@@ -201,7 +201,7 @@
             ],
             "mapCode": "r44"
         },
-		"Puzzle Door Room": {
+        "Puzzle Door Room": {
             "name": "Puzzle Door Room",
             "description": "You arrived in a puzzle room.",
             "actions": [
@@ -218,7 +218,7 @@
             ],
             "mapCode": "r55"
         },
-		"Treasure Stash": {
+        "Treasure Stash": {
             "name": "Treasure Stash",
             "description": "You arrived room . There is a treasure box.",
             "actions": [
@@ -236,7 +236,7 @@
             ],
             "mapCode": "r65"
         },
-		"Boss Room": {
+        "Boss Room": {
             "name": "Boss Room",
             "description": "You arrived in a boss room.",
             "actions": [
@@ -291,21 +291,9 @@
             ["r47", "Exit"]
         ],
 
+
         "discoveredRooms": [
-            "r40",
-            "r41",
-            "r42",
-            "r52",
-            "r62",
-            "r43",
-            "r44",
-            "r34",
-            "r24",
-            "r45",
-            "r55",
-            "r65",
-            "r46",
-            "r47"
+            "r40"
         ],
 
         "currentRoom": "r40",
