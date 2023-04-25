@@ -59,9 +59,8 @@ const displayCurrentRoom = async (roomName, description, actions) => {
     let i = 0;
     while (i < actions.length) {
         const action = actions[i];
-        console.log(action);
-        // Check if the action is a "collect" action and if the item has already been collected, remove it from the array.
-        if (action.type == "collect" && action.item in player.items) {
+        // Check if the action is a "collect" action and if all items in the room have been collected, remove it from the array.
+        if (action.type == "collect" && world.collectedItems[action.location] >= action.quantity) {
             actions.splice(i, 1);
             continue;
         }
@@ -78,6 +77,22 @@ const displayCurrentRoom = async (roomName, description, actions) => {
             console.log(currentRoom.name);
             console.log(world.clearedRooms);
             console.log(action);
+            actions.splice(i, 1);
+            continue;
+        }
+        // Check if the move action has showIfSolved attribute, hide if room is not in world.solvedPuzzleRooms
+        if (
+            action.hasOwnProperty("showIfSolved") &&
+            !(currentRoom.name in world.solvedPuzzleRooms)
+        ) {
+            actions.splice(i, 1);
+            continue;
+        }
+        //Check if the use action has the consume attribute, hide if the item is not in the player's inventory
+        if (
+            action.hasOwnProperty("needItem") && player.items[action.consume] == 0) {
+            console.log(action.consume)
+            console.log(player.items[action.consume])
             actions.splice(i, 1);
             continue;
         }
@@ -103,10 +118,10 @@ const displayCurrentRoom = async (roomName, description, actions) => {
 };
 
 // Update item list on display
-const updateItems = async (newItem) => {
+const updateItems = async (newItem, quantity) => {
     let p = document.createElement("p");
 
-    const parent = document.querySelector(`.items`);
+    const parent = document.querySelector(`.items .list`);
 
     const childElements = Array.from(parent.children);
     const numChildElements = childElements.length;
@@ -114,10 +129,11 @@ const updateItems = async (newItem) => {
     p.classList.add(`item${numChildElements}`);
     parent.append(p);
     await typeWriter(
-        `${numChildElements}. ${newItem}`,
+        /*`${numChildElements}. */`${newItem + " (" + quantity + ")"}`,
         `item${numChildElements}`
     );
 };
+
 
 const updatePlayer = async (player) => {
     // Clear old text
@@ -150,8 +166,13 @@ window.addEventListener("load", () => {
                 actions
             );
 
+            //Clear item box, and update with items the player posesses
+            $(".items .list").empty();
+
             for (item in player.items) {
-                updateItems(item);
+                if (player.items[item] > 0) {
+                    updateItems(item, player.items[item]);
+                }
             }
 
             //Map
@@ -206,16 +227,28 @@ document.querySelector("form").addEventListener("submit", (event) => {
                     displayCurrentRoom(
                         currentRoom.name,
                         currentRoom.description,
-                        actions
+                        actions,
                     );
                     break;
                 }
                 case "collect": {
-                    let { newPlayerData, newItem } = response.data;
+                    let { newPlayerData, newItem, newWorldData, currentRoom } = response.data;
                     // Update player data
                     player = newPlayerData;
+                    world = newWorldData;
 
-                    updateItems(newItem);
+                    //Clear item box, and update with items the player posesses
+                    $(".items .list").empty();
+
+                    for (item in player.items) {
+                        if (player.items[item] > 0) {
+                            updateItems(item, player.items[item])
+                        }
+                    }
+
+                    //Refresh action list
+                    actions = currentRoom.actions
+                    
                     displayCurrentRoom(
                         currentRoom.name,
                         currentRoom.description,
@@ -234,7 +267,7 @@ document.querySelector("form").addEventListener("submit", (event) => {
                     player = newPlayerData;
                     world = newWorldData;
 
-                    // Refresh action lsit
+                    // Refresh action list
                     actions = currentRoom.actions;
 
                     updatePlayer(player);
@@ -247,6 +280,37 @@ document.querySelector("form").addEventListener("submit", (event) => {
                     );
 
                     printText(battleResultMessage);
+                    break;
+                }
+                case "use": {
+                    let {
+                        newPlayerData,
+                        newWorldData,
+                        currentRoom,
+                        itemResultMessage,
+                    } = response.data
+                    // Update player and world data
+                    player = newPlayerData;
+                    world = newWorldData;
+
+                    //Clear item box, and update with items the player posesses
+                    $(".items .list").empty();
+
+                    for (item in player.items) {
+                        if (player.items[item] > 0) {
+                            updateItems(item, player.items[item])
+                        }
+                    }                    
+
+                    //Refresh action list
+                    actions = currentRoom.actions;
+
+                    displayCurrentRoom(
+                        currentRoom.name,
+                        currentRoom.description,
+                        actions
+                    );
+                    printText(itemResultMessage);
                     break;
                 }
                 default:
