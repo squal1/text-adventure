@@ -1,7 +1,15 @@
 {
     "player": {
         "stats": { "hp": 10, "attack": 1 },
-        "items": {"stick": 0, "potion": 1, "rope": 0, "torch": 0, "pebble": 0, "sword": 0, "shield": 0}
+        "items": {
+            "stick": 0,
+            "potion": 1,
+            "rope": 0,
+            "torch": 0,
+            "pebble": 0,
+            "sword": 0,
+            "shield": 0
+        }
     },
 
     "rooms": {
@@ -83,7 +91,6 @@
                     "location": "Cave",
                     "resultText": "The stick caught fire, creating a torch. Obtained the torch!",
                     "effect": ""
-                    
                 },
                 {
                     "type": "use",
@@ -143,7 +150,7 @@
                 },
                 {
                     "type": "fight",
-                    "description": "Fight the rat, which sits at the entrance to the next chamber.",
+                    "description": "Fight the rat, which sits at the entrance to the next chamber. (Atk:1 Hp:4)",
                     "enemy": "rat",
                     "attack": 1,
                     "hp": 4,
@@ -377,7 +384,7 @@
                     "gain": "",
                     "solved": true,
                     "location": "Door Room",
-                    "resultText": "With pinpoint accuracy, you threw the pebble at the switch. A stone door opens."        
+                    "resultText": "With pinpoint accuracy, you threw the pebble at the switch. A stone door opens."
                 },
                 {
                     "type": "use",
@@ -433,11 +440,11 @@
                     "type": "move",
                     "description": "Take the western path",
                     "destination": "Puzzle Door Room",
-                    "showIfCleared": true                    
+                    "showIfCleared": true
                 },
                 {
                     "type": "fight",
-                    "description": "Fight with the slime, which blocks the western path.",
+                    "description": "Fight with the slime, which blocks the western path. (Atk:2 Hp:2)",
                     "enemy": "slime",
                     "attack": 2,
                     "hp": 2,
@@ -499,7 +506,7 @@
                 },
                 {
                     "type": "fight",
-                    "description": "Fight the giant spider, which has moved to block the exit.",
+                    "description": "Fight the giant spider, which has moved to block the exit. (Atk:4 Hp:6)",
                     "enemy": "giant spider",
                     "attack": 4,
                     "hp": 6,
@@ -717,7 +724,7 @@
             "actions": [
                 {
                     "type": "fight",
-                    "description": "Fight the spectre, which has forced both doors shut!",
+                    "description": "Fight the spectre, which has forced both doors shut! (Atk:1, hp:20)",
                     "enemy": "spectre",
                     "attack": 1,
                     "hp": 20,
