@@ -73,6 +73,12 @@ app.post("/action", (req, res) => {
 
             numOfRounds = Math.floor(enemyHp / playerAtk);
             playerHp -= enemyAtk * numOfRounds;
+			
+			//game over
+			if (playerHp < 0) {
+				currentRoom = rooms["Gameover"];
+				playerHp = 10;
+			}
 
             // Update player hp
             player.stats.hp = playerHp;

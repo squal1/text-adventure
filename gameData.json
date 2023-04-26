@@ -787,7 +787,19 @@
             "description": "You made it to the exit",
             "actions": [],
             "mapCode": "r47"
-        }
+        },
+		"Gameover": {
+			"name": "GameOver",
+			"description": "You have lost too much health. GAME OVER! Health has been reset.",
+			"actions": [
+				{
+					"type": "move",
+					"description": "Go back to the entrance",
+					"destination": "Entrance"
+				}
+			],
+            "mapCode": "r88"
+		}
     },
 
     "world": {
@@ -808,7 +820,8 @@
             ["r55", "Puzzle Door Room"],
             ["r65", "Treasure Stash"],
             ["r46", "Boss Room"],
-            ["r47", "Exit"]
+            ["r47", "Exit"],
+			["r88", "GameOver"]
         ],
 
         "discoveredRooms": ["r40"],
