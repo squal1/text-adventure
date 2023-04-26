@@ -245,7 +245,7 @@
         },
         "Cave Clearing": {
             "name": "Cave Clearing",
-            "description": "You arrived at a cave clearing. There is a stone tablet inscription that reads: '3214'. A backpack rests on the floor.",
+            "description": "You arrived at a cave clearing. A backpack rests on the floor.",
             "actions": [
                 {
                     "type": "move",
@@ -552,7 +552,7 @@
                 },
                 {
                     "type": "move",
-                    "description": "Jump down the well",
+                    "description": "Climb down the well",
                     "destination": "Leaky Passage",
                     "showIfSolved": true
                 },
@@ -610,7 +610,7 @@
         },
         "Puzzle Door Room": {
             "name": "Puzzle Door Room",
-            "description": "You arrived in a puzzle room.",
+            "description": "You arrived in a puzzle room. There is a hole in the wall",
             "actions": [
                 {
                     "type": "move",
@@ -619,8 +619,19 @@
                 },
                 {
                     "type": "move",
-                    "description": "Proceed further",
-                    "destination": "Treasure Stash"
+                    "description": "Advance into the treasure room",
+                    "destination": "Treasure Stash",
+                    "showIfSolved": true
+                },
+                {
+                    "type": "use",
+                    "description": "Jam a stick into the hole",
+                    "needItem": true,
+                    "consume": "stick",
+                    "gain": "",
+                    "solved": true,
+                    "location": "Puzzle Door Room",
+                    "resultText": "You inserted the stick into the hole. A click is followed by the sound of turning gears as the door to a treasure room opens!"
                 },
                 {
                     "type": "use",
