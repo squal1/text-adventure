@@ -1,5 +1,7 @@
 const express = require("express");
+var fs = require('fs');
 var {
+    gameSaved,
     player,
     rooms,
     world,
@@ -25,6 +27,7 @@ app.get("/init", (req, res) => {
         currentRoom,
         discoveredRooms,
     });
+    console.log("test init");
 });
 
 app.post("/action", (req, res) => {
@@ -141,6 +144,12 @@ app.post("/action", (req, res) => {
             // Handle invalid action
             res.send(400, "Invalid action type");
     }
+
+    console.log("test action");
+
+    var jsonSave = { gameSaved, player, rooms, world }
+
+    fs.writeFileSync('saveData.json', JSON.stringify(jsonSave));
 });
 
 app.listen(port, () => {

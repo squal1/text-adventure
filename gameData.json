@@ -1,4 +1,5 @@
 {
+    "gameSaved": false,
     "player": {
         "stats": { "hp": 10, "attack": 1 },
         "items": {"stick": 0, "potion": 1, "rope": 0, "torch": 0, "pebble": 0, "sword": 0, "shield": 0}
