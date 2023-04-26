@@ -44,6 +44,10 @@ body {
     border-top: 1px solid #131313;
 }
 
+.items {
+    overflow: scroll;
+}
+
 .dialogue {
     display: flex;
     flex-direction: column;

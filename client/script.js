@@ -25,7 +25,7 @@ const typeWriter = (text, className, i = 0) => {
             i++;
             setTimeout(() => {
                 typeWriter(text, className, i).then(resolve).catch(reject);
-            }, 1);
+            }, 0);
         } else {
             // Resolve the Promise when the typing animation is complete.
             resolve();
@@ -43,6 +43,7 @@ const printText = async (text) => {
 
     li.classList.add(`description${numChildElements}`);
     parent.append(li);
+    li.scrollIntoView();
     await typeWriter(text, `description${numChildElements}`);
 };
 
@@ -57,10 +58,10 @@ const displayCurrentRoom = async (roomName, description, actions) => {
     background.style.backgroundImage = `url(./assets/rooms/${currentRoom.mapCode}.jpg)`;
     background.style.backgroundSize = "100% 100%";
     background.style.backgroundRepeat = "no-repeat";
-    background.style.opacity = 0.5;
+    background.style.opacity = 0.4;
 
     await typeWriter(roomName, "current-room");
-    printText(description);
+    await printText(description);
 
     // Loop through each action in array and display it using the typeWriter function
     let i = 0;
@@ -119,7 +120,10 @@ const displayCurrentRoom = async (roomName, description, actions) => {
         await typeWriter(
             `${i + 1}. ${action.description}`,
             `action${numChildElements}`
-        );
+        ).then(() => {
+            console.log("printed line");
+            $(".text-wrapper").scrollTop($(".text-wrapper")[0].scrollHeight);
+        });
         i++;
     }
 
@@ -241,8 +245,13 @@ document.querySelector("form").addEventListener("submit", (event) => {
                     break;
                 }
                 case "collect": {
-                    let { newPlayerData, newItem, newWorldData, currentRoom, itemResultMessage } =
-                        response.data;
+                    let {
+                        newPlayerData,
+                        newItem,
+                        newWorldData,
+                        currentRoom,
+                        itemResultMessage,
+                    } = response.data;
                     // Update player data
                     player = newPlayerData;
                     world = newWorldData;
@@ -394,40 +403,3 @@ const updateMap = (discoveredRooms, currentRoom) => {
     curRoom = document.querySelector("." + currentRoom);
     curRoom.classList.add("current");
 };
-
-//Updates the background of the current room
-//roomImageUrl: "bgimageurl"
-//enemyList: [["enemyimageurl", number of enemy], ["enemyimageurl", number of enemy]]
-// const updateRoomImage = (roomImageUrl, enemyList) => {
-//     //Update the background
-//     selector = document.querySelector(".roomDisplay");
-//     console.log(selector);
-//     selector.style.backgroundImage = "url('" + roomImageUrl + "')";
-
-//     //Update the enemies
-//     if (enemyList.length > 0) {
-//         //Loop through enemy list
-//         for (i = 0; i < enemyList.length; i++) {
-//             //Pull an enemy entry from array
-//             var enemy = enemyList[i];
-//             //Place the provided number of that enemy on the screen
-//             for (n = 0; n < enemy[1]; n++) {
-//                 let img = document.createElement("img");
-//                 img.src = enemy[0];
-//                 selector.append(img);
-//             }
-//         }
-//     } else {
-//         console.log("no enemies in room");
-//     }
-// };
-
-//var enemyArr = [];
-// var enemyArr = [
-//     ["slime.png", 10],
-//     ["dragon.png", 1],
-// ];
-// updateRoomImage("paper.jpg", enemyArr);
-
-//BUG LIST:
-//On page reload, map highlights the entrance

@@ -55,9 +55,15 @@ app.post("/action", (req, res) => {
             newPlayerData = player;
             newWorldData = world;
             currentRoom = rooms[action.location];
-            itemResultMessage = action.resultText
+            itemResultMessage = action.resultText;
             //console.log(newPlayerData);
-            res.status(200).send({ newPlayerData, newItem, newWorldData, currentRoom, itemResultMessage });
+            res.status(200).send({
+                newPlayerData,
+                newItem,
+                newWorldData,
+                currentRoom,
+                itemResultMessage,
+            });
             break;
         case "fight":
             enemyHp = action.hp;
@@ -77,9 +83,13 @@ app.post("/action", (req, res) => {
             newPlayerData = player;
             newWorldData = world;
 
-            battleResultMessage = `You defeated the enemy with ${numOfRounds} hits. You took ${enemyAtk} * ${enemyHp} = ${
-                enemyAtk * numOfRounds
-            } damage from the battle.`;
+            if (numOfRounds == 0) {
+                battleResultMessage = `The enemy didn't stand any chance in front of you at all. You killed it without taking any damage.`;
+            } else {
+                battleResultMessage = `You defeated the enemy with ${numOfRounds} hits. You took ${enemyAtk} * ${numOfRounds} = ${
+                    enemyAtk * numOfRounds
+                } damage from the battle.`;
+            }
 
             res.status(200).send({
                 newPlayerData,
