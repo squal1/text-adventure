@@ -1,7 +1,7 @@
 {
     "player": {
         "stats": { "hp": 10, "attack": 1 },
-        "items": {"stick": 0, "potion": 0, "rope": 0, "torch": 0, "pebble": 0}
+        "items": { "stick": 0, "potion": 0, "rope": 0, "torch": 0, "pebble": 0 }
     },
 
     "rooms": {
@@ -55,7 +55,6 @@
                     "solved": true,
                     "location": "Cave",
                     "resultText": "The stick caught fire, creating a torch. Obtained the torch!"
-                    
                 }
             ],
             "mapCode": "r41"
@@ -147,7 +146,7 @@
         },
         "Leaky Passage": {
             "name": "Leaky Passage",
-            "description": "You arrived at a leaky passage .",
+            "description": "You arrived at a leaky passage.",
             "actions": [
                 {
                     "type": "move",
@@ -291,10 +290,7 @@
             ["r47", "Exit"]
         ],
 
-
-        "discoveredRooms": [
-            "r40"
-        ],
+        "discoveredRooms": ["r40"],
 
         "currentRoom": "r40",
 
@@ -314,8 +310,5 @@
             "Boss Room": 0,
             "Exit": 0
         }
-
-        
-
     }
 }
