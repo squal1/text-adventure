@@ -55,8 +55,9 @@ app.post("/action", (req, res) => {
             newPlayerData = player;
             newWorldData = world;
             currentRoom = rooms[action.location];
+            itemResultMessage = action.resultText
             //console.log(newPlayerData);
-            res.status(200).send({ newPlayerData, newItem, newWorldData, currentRoom });
+            res.status(200).send({ newPlayerData, newItem, newWorldData, currentRoom, itemResultMessage });
             break;
         case "fight":
             enemyHp = action.hp;
@@ -92,6 +93,7 @@ app.post("/action", (req, res) => {
         case "use":
             usedItem = action.consume;
             gainedItem = action.gain;
+            itemEffect = action.effect;
 
             // Update player items on server
             if (player.items[usedItem] > 0) {
@@ -99,9 +101,17 @@ app.post("/action", (req, res) => {
                 console.log("item used");
             }
             if (gainedItem === "") {
-                print("No item gained from use");
+                console.log("No item gained from use");
             } else {
                 player.items[gainedItem]++;
+            }
+
+            if (itemEffect === "heal") {
+                player.stats["hp"] = player.stats["hp"] + 5;
+            } else if (itemEffect === "attack") {
+                player.stats["attack"] = player.stats["attack"] + 2;
+            } else {
+                console.log("No stat change from using item");
             }
 
             console.log(player.items);

@@ -1,7 +1,7 @@
 {
     "player": {
         "stats": { "hp": 10, "attack": 1 },
-        "items": {"stick": 0, "potion": 0, "rope": 0, "torch": 0, "pebble": 0}
+        "items": {"stick": 0, "potion": 1, "rope": 0, "torch": 0, "pebble": 0, "sword": 0, "shield": 0}
     },
 
     "rooms": {
@@ -13,13 +13,47 @@
                     "type": "collect",
                     "description": "Pick up a stick.",
                     "item": "stick",
-                    "quantity": 1,
-                    "location": "Entrance"
+                    "quantity": 2,
+                    "location": "Entrance",
+                    "resultText": "You picked up a stick."
                 },
                 {
                     "type": "move",
                     "description": "Proceed to next room",
                     "destination": "Cave"
+                },
+                {
+                    "type": "use",
+                    "description": "Drink a potion",
+                    "needItem": true,
+                    "consume": "potion",
+                    "gain": "",
+                    "solved": false,
+                    "location": "Entrance",
+                    "resultText": "You drank a potion. Tastes like blueberries! HP recovered.",
+                    "effect": "heal"
+                },
+                {
+                    "type": "use",
+                    "description": "Equip the sword",
+                    "needItem": true,
+                    "consume": "sword",
+                    "gain": "",
+                    "solved": false,
+                    "location": "Entrance",
+                    "resultText": "You equipped the sword. Attack increased.",
+                    "effect": "attack"
+                },
+                {
+                    "type": "use",
+                    "description": "Equip the shield",
+                    "needItem": true,
+                    "consume": "shield",
+                    "gain": "",
+                    "solved": false,
+                    "location": "Entrance",
+                    "resultText": "You equipped the shield. Attack increased.",
+                    "effect": "attack"
                 }
             ],
             "mapCode": "r40"
@@ -28,13 +62,6 @@
             "name": "Cave",
             "description": "You arrived in a cave. A bonfire flickers gently. The room ahead is too dark to advance safely.",
             "actions": [
-                {
-                    "type": "collect",
-                    "description": "Pick up a stick.",
-                    "item": "stick",
-                    "quantity": 2,
-                    "location": "Cave"
-                },
                 {
                     "type": "move",
                     "description": "Go back to entrance",
@@ -54,8 +81,42 @@
                     "gain": "torch",
                     "solved": true,
                     "location": "Cave",
-                    "resultText": "The stick caught fire, creating a torch. Obtained the torch!"
+                    "resultText": "The stick caught fire, creating a torch. Obtained the torch!",
+                    "effect": ""
                     
+                },
+                {
+                    "type": "use",
+                    "description": "Drink a potion",
+                    "needItem": true,
+                    "consume": "potion",
+                    "gain": "",
+                    "solved": false,
+                    "location": "Cave",
+                    "resultText": "You drank a potion. Tastes like blueberries! HP recovered.",
+                    "effect": "heal"
+                },
+                {
+                    "type": "use",
+                    "description": "Equip the sword",
+                    "needItem": true,
+                    "consume": "sword",
+                    "gain": "",
+                    "solved": false,
+                    "location": "Cave",
+                    "resultText": "You equipped the sword. Attack increased.",
+                    "effect": "attack"
+                },
+                {
+                    "type": "use",
+                    "description": "Equip the shield",
+                    "needItem": true,
+                    "consume": "shield",
+                    "gain": "",
+                    "solved": false,
+                    "location": "Cave",
+                    "resultText": "You equipped the shield. Attack increased.",
+                    "effect": "attack"
                 }
             ],
             "mapCode": "r41"
@@ -72,19 +133,61 @@
                 {
                     "type": "move",
                     "description": "Travel off the path",
-                    "destination": "Cave-In Room"
+                    "destination": "Cave-In Room",
+                    "showIfCleared": true
                 },
                 {
                     "type": "move",
                     "description": "Proceed to next room",
                     "destination": "Door Room"
+                },
+                {
+                    "type": "fight",
+                    "description": "Fight the rat, which sits at the entrance to the next chamber.",
+                    "enemy": "rat",
+                    "attack": 1,
+                    "hp": 4,
+                    "location": "Dark Room"
+                },
+                {
+                    "type": "use",
+                    "description": "Drink a potion",
+                    "needItem": true,
+                    "consume": "potion",
+                    "gain": "",
+                    "solved": false,
+                    "location": "Dark Room",
+                    "resultText": "You drank a potion. Tastes like blueberries! HP recovered.",
+                    "effect": "heal"
+                },
+                {
+                    "type": "use",
+                    "description": "Equip the sword",
+                    "needItem": true,
+                    "consume": "sword",
+                    "gain": "",
+                    "solved": false,
+                    "location": "Dark Room",
+                    "resultText": "You equipped the sword. Attack increased.",
+                    "effect": "attack"
+                },
+                {
+                    "type": "use",
+                    "description": "Equip the shield",
+                    "needItem": true,
+                    "consume": "shield",
+                    "gain": "",
+                    "solved": false,
+                    "location": "Dark Room",
+                    "resultText": "You equipped the shield. Attack increased.",
+                    "effect": "attack"
                 }
             ],
             "mapCode": "r42"
         },
         "Cave-In Room": {
             "name": "Cave-In Room",
-            "description": "You arrived at a cave-in.",
+            "description": "You arrived at a cave-in. A break in the collapsed ceiling leads to a clearing.",
             "actions": [
                 {
                     "type": "move",
@@ -95,25 +198,107 @@
                     "type": "move",
                     "description": "Proceed to a clearing",
                     "destination": "Cave Clearing"
+                },
+                {
+                    "type": "collect",
+                    "description": "Pick up a pebble from the rubble",
+                    "item": "pebble",
+                    "quantity": 10,
+                    "location": "Cave-In Room",
+                    "resultText": "You plucked a pebble from the pile. It's light enough to throw."
+                },
+                {
+                    "type": "use",
+                    "description": "Drink a potion",
+                    "needItem": true,
+                    "consume": "potion",
+                    "gain": "",
+                    "solved": false,
+                    "location": "Cave-In Room",
+                    "resultText": "You drank a potion. Tastes like blueberries! HP recovered.",
+                    "effect": "heal"
+                },
+                {
+                    "type": "use",
+                    "description": "Equip the sword",
+                    "needItem": true,
+                    "consume": "sword",
+                    "gain": "",
+                    "solved": false,
+                    "location": "Cave-In Room",
+                    "resultText": "You equipped the sword. Attack increased.",
+                    "effect": "attack"
+                },
+                {
+                    "type": "use",
+                    "description": "Equip the shield",
+                    "needItem": true,
+                    "consume": "shield",
+                    "gain": "",
+                    "solved": false,
+                    "location": "Cave-In Room",
+                    "resultText": "You equipped the shield. Attack increased.",
+                    "effect": "attack"
                 }
             ],
             "mapCode": "r52"
         },
         "Cave Clearing": {
             "name": "Cave Clearing",
-            "description": "You arrived at a cave clearing. There is a stone tablet inscription that reads: '3214'",
+            "description": "You arrived at a cave clearing. There is a stone tablet inscription that reads: '3214'. A backpack rests on the floor.",
             "actions": [
                 {
                     "type": "move",
                     "description": "Go back to previous room",
                     "destination": "Cave-In Room"
+                },
+                {
+                    "type": "collect",
+                    "description": "Loot the abandoned adventurer's backpack",
+                    "item": "rope",
+                    "quantity": 1,
+                    "location": "Cave Clearing",
+                    "resultText": "It's not stealing if it's abandoned! Obtained a rope."
+                },
+                {
+                    "type": "use",
+                    "description": "Drink a potion",
+                    "needItem": true,
+                    "consume": "potion",
+                    "gain": "",
+                    "solved": false,
+                    "location": "Cave Clearing",
+                    "resultText": "You drank a potion. Tastes like blueberries! HP recovered.",
+                    "effect": "heal"
+                },
+                {
+                    "type": "use",
+                    "description": "Equip the sword",
+                    "needItem": true,
+                    "consume": "sword",
+                    "gain": "",
+                    "solved": false,
+                    "location": "Cave Clearing",
+                    "resultText": "You equipped the sword. Attack increased.",
+                    "effect": "attack"
+                },
+                {
+                    "type": "use",
+                    "description": "Equip the shield",
+                    "needItem": true,
+                    "consume": "shield",
+                    "gain": "",
+                    "solved": false,
+                    "location": "Cave Clearing",
+                    "resultText": "You equipped the shield. Attack increased.",
+                    "effect": "attack"
                 }
             ],
             "mapCode": "r62"
         },
         "Catacombs": {
             "name": "Catacombs",
-            "description": "You arrived at some catacombs.",
+            "description": "You arrived at some catacombs. Several coffins line the walls.",
             "actions": [
                 {
                     "type": "move",
@@ -124,13 +309,54 @@
                     "type": "move",
                     "description": "Proceed to the tomb",
                     "destination": "Tomb"
+                },
+                {
+                    "type": "collect",
+                    "description": "Search a coffin for loot",
+                    "item": "potion",
+                    "quantity": 3,
+                    "location": "Catacombs",
+                    "resultText": "Peering inside the empty coffin, you find a potion! Don't worry, these things last longer than top ramen."
+                },
+                {
+                    "type": "use",
+                    "description": "Drink a potion",
+                    "needItem": true,
+                    "consume": "potion",
+                    "gain": "",
+                    "solved": false,
+                    "location": "Catacombs",
+                    "resultText": "You drank a potion. Tastes like blueberries! HP recovered.",
+                    "effect": "heal"
+                },
+                {
+                    "type": "use",
+                    "description": "Equip the sword",
+                    "needItem": true,
+                    "consume": "sword",
+                    "gain": "",
+                    "solved": false,
+                    "location": "Catacombs",
+                    "resultText": "You equipped the sword. Attack increased.",
+                    "effect": "attack"
+                },
+                {
+                    "type": "use",
+                    "description": "Equip the shield",
+                    "needItem": true,
+                    "consume": "shield",
+                    "gain": "",
+                    "solved": false,
+                    "location": "Catacombs",
+                    "resultText": "You equipped the shield. Attack increased.",
+                    "effect": "attack"
                 }
             ],
             "mapCode": "r34"
         },
         "Door Room": {
             "name": "Door Room",
-            "description": "You arrived at a door room.",
+            "description": "You arrived at a stone room with intricate carvings in the walls. A switch lies on the wall, far outside your reach.",
             "actions": [
                 {
                     "type": "move",
@@ -140,14 +366,58 @@
                 {
                     "type": "move",
                     "description": "Proceed south",
-                    "destination": "Well"
+                    "destination": "Well",
+                    "showIfSolved": true
+                },
+                {
+                    "type": "use",
+                    "description": "Throw a pebble at the switch",
+                    "needItem": true,
+                    "consume": "pebble",
+                    "gain": "",
+                    "solved": true,
+                    "location": "Door Room",
+                    "resultText": "With pinpoint accuracy, you threw the pebble at the switch. A stone door opens."        
+                },
+                {
+                    "type": "use",
+                    "description": "Drink a potion",
+                    "needItem": true,
+                    "consume": "potion",
+                    "gain": "",
+                    "solved": false,
+                    "location": "Door Room",
+                    "resultText": "You drank a potion. Tastes like blueberries! HP recovered.",
+                    "effect": "heal"
+                },
+                {
+                    "type": "use",
+                    "description": "Equip the sword",
+                    "needItem": true,
+                    "consume": "sword",
+                    "gain": "",
+                    "solved": false,
+                    "location": "Door Room",
+                    "resultText": "You equipped the sword. Attack increased.",
+                    "effect": "attack"
+                },
+                {
+                    "type": "use",
+                    "description": "Equip the shield",
+                    "needItem": true,
+                    "consume": "shield",
+                    "gain": "",
+                    "solved": false,
+                    "location": "Door Room",
+                    "resultText": "You equipped the shield. Attack increased.",
+                    "effect": "attack"
                 }
             ],
             "mapCode": "r43"
         },
         "Leaky Passage": {
             "name": "Leaky Passage",
-            "description": "You arrived at a leaky passage .",
+            "description": "At the bottom of the well, you encounter a small leaky passage with two paths.",
             "actions": [
                 {
                     "type": "move",
@@ -156,32 +426,124 @@
                 },
                 {
                     "type": "move",
-                    "description": "Proceed to next room",
+                    "description": "Take the southern path",
                     "destination": "Boss Room"
                 },
                 {
                     "type": "move",
-                    "description": "Go west",
-                    "destination": "Puzzle Door Room"
+                    "description": "Take the western path",
+                    "destination": "Puzzle Door Room",
+                    "showIfCleared": true                    
+                },
+                {
+                    "type": "fight",
+                    "description": "Fight with the slime, which blocks the western path.",
+                    "enemy": "slime",
+                    "attack": 2,
+                    "hp": 2,
+                    "location": "Leaky Passage"
+                },
+                {
+                    "type": "use",
+                    "description": "Drink a potion",
+                    "needItem": true,
+                    "consume": "potion",
+                    "gain": "",
+                    "solved": false,
+                    "location": "Leaky Passage",
+                    "resultText": "You drank a potion. Tastes like blueberries! HP recovered.",
+                    "effect": "heal"
+                },
+                {
+                    "type": "use",
+                    "description": "Equip the sword",
+                    "needItem": true,
+                    "consume": "sword",
+                    "gain": "",
+                    "solved": false,
+                    "location": "Leaky Passage",
+                    "resultText": "You equipped the sword. Attack increased.",
+                    "effect": "attack"
+                },
+                {
+                    "type": "use",
+                    "description": "Equip the shield",
+                    "needItem": true,
+                    "consume": "shield",
+                    "gain": "",
+                    "solved": false,
+                    "location": "Leaky Passage",
+                    "resultText": "You equipped the shield. Attack increased.",
+                    "effect": "attack"
                 }
             ],
             "mapCode": "r45"
         },
         "Tomb": {
             "name": "Tomb",
-            "description": "You arrived in a tomb and dead end.",
+            "description": "You arrived at a tomb and dead end. A decorated coffin rests at the end of the room.",
             "actions": [
                 {
                     "type": "move",
                     "description": "Go back to previous room",
-                    "destination": "Catacombs"
+                    "destination": "Catacombs",
+                    "showIfCleared": true
+                },
+                {
+                    "type": "collect",
+                    "description": "Open the tomb cover",
+                    "item": "shield",
+                    "quantity": 1,
+                    "location": "Tomb",
+                    "resultText": "Pushing aside the heavy tomb cover, you spot the skeleton of a warrior grasping a sturdy shield. Obtained the shield!"
+                },
+                {
+                    "type": "fight",
+                    "description": "Fight the giant spider, which has moved to block the exit.",
+                    "enemy": "giant spider",
+                    "attack": 4,
+                    "hp": 6,
+                    "location": "Tomb"
+                },
+                {
+                    "type": "use",
+                    "description": "Drink a potion",
+                    "needItem": true,
+                    "consume": "potion",
+                    "gain": "",
+                    "solved": false,
+                    "location": "Tomb",
+                    "resultText": "You drank a potion. Tastes like blueberries! HP recovered.",
+                    "effect": "heal"
+                },
+                {
+                    "type": "use",
+                    "description": "Equip the sword",
+                    "needItem": true,
+                    "consume": "sword",
+                    "gain": "",
+                    "solved": false,
+                    "location": "Tomb",
+                    "resultText": "You equipped the sword. Attack increased.",
+                    "effect": "attack"
+                },
+                {
+                    "type": "use",
+                    "description": "Equip the shield",
+                    "needItem": true,
+                    "consume": "shield",
+                    "gain": "",
+                    "solved": false,
+                    "location": "Tomb",
+                    "resultText": "You equipped the shield. Attack increased.",
+                    "effect": "attack"
                 }
             ],
             "mapCode": "r24"
         },
         "Well": {
             "name": "Well",
-            "description": "You arrived at a well.",
+            "description": "You arrived at a well. You don't think you could go down without breaking a leg.",
             "actions": [
                 {
                     "type": "move",
@@ -191,12 +553,57 @@
                 {
                     "type": "move",
                     "description": "Jump down the well",
-                    "destination": "Leaky Passage"
+                    "destination": "Leaky Passage",
+                    "showIfSolved": true
                 },
                 {
                     "type": "move",
                     "description": "Proceed east",
                     "destination": "Catacombs"
+                },
+                {
+                    "type": "use",
+                    "description": "Throw down the rope",
+                    "needItem": true,
+                    "consume": "rope",
+                    "gain": "",
+                    "solved": true,
+                    "location": "Well",
+                    "resultText": "You tied one end of the rope to the well and tossed down the other end. Now you can safely climb down!",
+                    "effect": ""
+                },
+                {
+                    "type": "use",
+                    "description": "Drink a potion",
+                    "needItem": true,
+                    "consume": "potion",
+                    "gain": "",
+                    "solved": false,
+                    "location": "Well",
+                    "resultText": "You drank a potion. Tastes like blueberries! HP recovered.",
+                    "effect": "heal"
+                },
+                {
+                    "type": "use",
+                    "description": "Equip the sword",
+                    "needItem": true,
+                    "consume": "sword",
+                    "gain": "",
+                    "solved": false,
+                    "location": "Well",
+                    "resultText": "You equipped the sword. Attack increased.",
+                    "effect": "attack"
+                },
+                {
+                    "type": "use",
+                    "description": "Equip the shield",
+                    "needItem": true,
+                    "consume": "shield",
+                    "gain": "",
+                    "solved": false,
+                    "location": "Well",
+                    "resultText": "You equipped the shield. Attack increased.",
+                    "effect": "attack"
                 }
             ],
             "mapCode": "r44"
@@ -214,50 +621,152 @@
                     "type": "move",
                     "description": "Proceed further",
                     "destination": "Treasure Stash"
+                },
+                {
+                    "type": "use",
+                    "description": "Drink a potion",
+                    "needItem": true,
+                    "consume": "potion",
+                    "gain": "",
+                    "solved": false,
+                    "location": "Puzzle Door Room",
+                    "resultText": "You drank a potion. Tastes like blueberries! HP recovered.",
+                    "effect": "heal"
+                },
+                {
+                    "type": "use",
+                    "description": "Equip the sword",
+                    "needItem": true,
+                    "consume": "sword",
+                    "gain": "",
+                    "solved": false,
+                    "location": "Puzzle Door Room",
+                    "resultText": "You equipped the sword. Attack increased.",
+                    "effect": "attack"
+                },
+                {
+                    "type": "use",
+                    "description": "Equip the shield",
+                    "needItem": true,
+                    "consume": "shield",
+                    "gain": "",
+                    "solved": false,
+                    "location": "Puzzle Door Room",
+                    "resultText": "You equipped the shield. Attack increased.",
+                    "effect": "attack"
                 }
             ],
             "mapCode": "r55"
         },
         "Treasure Stash": {
             "name": "Treasure Stash",
-            "description": "You arrived room . There is a treasure box.",
+            "description": "You arrived at a treasure room. There is a treasure box.",
             "actions": [
                 {
                     "type": "collect",
                     "description": "Loot the treasure.",
-                    "item": "treasure",
-                    "quantity": 1
+                    "item": "sword",
+                    "quantity": 1,
+                    "location": "Treasure Stash",
+                    "resultText": "You opened the treasure chest. Inside, there was a sword!"
                 },
                 {
                     "type": "move",
                     "description": "Go back to previous room",
                     "destination": "Puzzle Door Room"
+                },
+                {
+                    "type": "use",
+                    "description": "Drink a potion",
+                    "needItem": true,
+                    "consume": "potion",
+                    "gain": "",
+                    "solved": false,
+                    "location": "Treasure Stash",
+                    "resultText": "You drank a potion. Tastes like blueberries! HP recovered.",
+                    "effect": "heal"
+                },
+                {
+                    "type": "use",
+                    "description": "Equip the sword",
+                    "needItem": true,
+                    "consume": "sword",
+                    "gain": "",
+                    "solved": false,
+                    "location": "Treasure Stash",
+                    "resultText": "You equipped the sword. Attack increased.",
+                    "effect": "attack"
+                },
+                {
+                    "type": "use",
+                    "description": "Equip the shield",
+                    "needItem": true,
+                    "consume": "shield",
+                    "gain": "",
+                    "solved": false,
+                    "location": "Treasure Stash",
+                    "resultText": "You equipped the shield. Attack increased.",
+                    "effect": "attack"
                 }
             ],
             "mapCode": "r65"
         },
         "Boss Room": {
             "name": "Boss Room",
-            "description": "You arrived in a boss room.",
+            "description": "You arrived in a boss room. An ominous chill fills the air...",
             "actions": [
                 {
                     "type": "fight",
-                    "description": "Fight with the slime which is blocking your way.",
-                    "enemy": "slime",
-                    "attack": 2,
-                    "hp": 2,
+                    "description": "Fight the spectre, which has forced both doors shut!",
+                    "enemy": "spectre",
+                    "attack": 1,
+                    "hp": 20,
                     "location": "Boss Room"
                 },
                 {
                     "type": "move",
                     "description": "Go back to previous room",
-                    "destination": "Leaky Passage"
+                    "destination": "Leaky Passage",
+                    "showIfCleared": true
                 },
                 {
                     "type": "move",
                     "description": "Proceed to the exit",
                     "destination": "exit",
                     "showIfCleared": true
+                },
+                {
+                    "type": "use",
+                    "description": "Drink a potion",
+                    "needItem": true,
+                    "consume": "potion",
+                    "gain": "",
+                    "solved": false,
+                    "location": "Boss Room",
+                    "resultText": "You drank a potion. Tastes like blueberries! HP recovered.",
+                    "effect": "heal"
+                },
+                {
+                    "type": "use",
+                    "description": "Equip the sword",
+                    "needItem": true,
+                    "consume": "sword",
+                    "gain": "",
+                    "solved": false,
+                    "location": "Boss Room",
+                    "resultText": "You equipped the sword. Attack increased.",
+                    "effect": "attack"
+                },
+                {
+                    "type": "use",
+                    "description": "Equip the shield",
+                    "needItem": true,
+                    "consume": "shield",
+                    "gain": "",
+                    "solved": false,
+                    "location": "Boss Room",
+                    "resultText": "You equipped the shield. Attack increased.",
+                    "effect": "attack"
                 }
             ],
             "mapCode": "r46"

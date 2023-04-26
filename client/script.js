@@ -234,7 +234,7 @@ document.querySelector("form").addEventListener("submit", (event) => {
                     break;
                 }
                 case "collect": {
-                    let { newPlayerData, newItem, newWorldData, currentRoom } =
+                    let { newPlayerData, newItem, newWorldData, currentRoom, itemResultMessage } =
                         response.data;
                     // Update player data
                     player = newPlayerData;
@@ -257,6 +257,8 @@ document.querySelector("form").addEventListener("submit", (event) => {
                         currentRoom.description,
                         actions
                     );
+
+                    printText(itemResultMessage);
                     break;
                 }
                 case "fight": {
@@ -307,6 +309,8 @@ document.querySelector("form").addEventListener("submit", (event) => {
 
                     //Refresh action list
                     actions = currentRoom.actions;
+                    //Update player
+                    updatePlayer(newPlayerData);
 
                     displayCurrentRoom(
                         currentRoom.name,
