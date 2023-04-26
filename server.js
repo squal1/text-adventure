@@ -9,6 +9,8 @@ var {
     discoveredRooms,
 } = require("./gameDataManager");
 
+console.log(player);
+
 const app = express();
 const port = 8000;
 
