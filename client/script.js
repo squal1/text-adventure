@@ -52,6 +52,13 @@ const displayCurrentRoom = async (roomName, description, actions) => {
     const inputField = document.querySelector("#inputField");
     inputField.disabled = true;
 
+    // Set background image for room
+    const background = document.querySelector(".bg");
+    background.style.backgroundImage = `url(./assets/rooms/${currentRoom.mapCode}.jpg)`;
+    background.style.backgroundSize = "100% 100%";
+    background.style.backgroundRepeat = "no-repeat";
+    background.style.opacity = 0.5;
+
     await typeWriter(roomName, "current-room");
     printText(description);
 

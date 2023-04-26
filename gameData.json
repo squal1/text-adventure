@@ -800,10 +800,7 @@
             ["r47", "Exit"]
         ],
 
-
-        "discoveredRooms": [
-            "r40"
-        ],
+        "discoveredRooms": ["r40"],
 
         "currentRoom": "r40",
 
@@ -823,8 +820,5 @@
             "Boss Room": 0,
             "Exit": 0
         }
-
-        
-
     }
 }
